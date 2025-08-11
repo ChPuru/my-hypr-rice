@@ -1,0 +1,78 @@
+# --- Core Desktop ---
+hyprland
+hyprlock
+waybar
+kitty
+mako
+wofi
+swww # Wallpaper daemon
+swaync # Notification center
+wlogout # Logout menu
+
+# --- System & Utilities ---
+git
+stow
+jq # JSON processor for theme script
+eza # Modern ls replacement
+bat # Modern cat replacement
+fzf # Fuzzy finder
+zoxide # Smarter cd command
+unzip
+pavucontrol # Audio control panel
+brightnessctl
+playerctl # Media player control
+bluez # Bluetooth protocol stack
+bluez-utils
+blueman # Bluetooth manager GUI
+fastfetch
+btop
+tlp
+kanshi
+
+# --- Shell & Fonts ---
+zsh
+starship
+noto-fonts
+noto-fonts-emoji
+ttf-jetbrains-mono-nerd
+
+# --- Theming & Appearance ---
+nwg-look # GTK theme switcher
+qt6ct
+kvantum
+papirus-icon-theme
+
+# --- File Managers ---
+thunar
+thunar-volman
+gvfs
+yazi
+
+# --- Login Manager ---
+ly```
+
+# --- Visuals & Widgets ---
+ags
+cava
+
+# --- Development & Productivity ---
+neovim
+tmux
+lazygit
+github-cli
+
+# --- Gaming ---
+steam
+lutris
+gamemode
+mangohud
+gamescope
+wine-staging
+
+# --- Scripting Tools ---
+pamixer
+hyprpicker
+swappy
+grim
+slurp
+wl-clipboard

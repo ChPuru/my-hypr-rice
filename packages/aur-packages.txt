@@ -1,0 +1,5 @@
+# --- Theming ---
+catppuccin-gtk-theme-mocha
+kvantum-theme-catppuccin-git
+bibata-cursor-theme-bin
+burn-my-windows-git
