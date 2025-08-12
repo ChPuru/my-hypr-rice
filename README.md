@@ -23,7 +23,7 @@ A complete, themed, and automated Hyprland environment for Arch Linux. This repo
 2. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/YOUR_USERNAME/my-hypr-rice.git
+    git clone https://github.com/ChPuru/my-hypr-rice.git
     cd my-hypr-rice
     ```
 
