@@ -2,6 +2,8 @@
   "wallpaper": "/home/puru/Pictures/wallpapers/tokyo-night.png",
   "font_main": "JetBrainsMono Nerd Font",
   "font_size": "11",
+  "lockscreen_image": "/home/puru/.config/hypr/assets/lock-image.png",
+  "lockscreen_welcome_text": "Greetings, Puru.",
   "nvim_theme": "tokyonight",
   "gtk_theme": "Tokyonight-Dark-B",
   "kvantum_theme": "Tokyonight",

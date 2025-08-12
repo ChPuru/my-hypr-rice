@@ -1,46 +1,66 @@
-# My Hyprland Rice
+# My Hypr-Rice: A Dynamic & Themed Hyprland Framework
 
-A complete, themed, and automated Hyprland environment for Arch Linux. This repository contains the full configuration for a "god-tier" desktop experience, managed by scripts and Stow.
+![Showcase](docs/showcase.png)
+*(Note: You will need to add a screenshot named `showcase.png` to the `docs` folder for this to display)*
 
-![screenshot-placeholder](https://via.placeholder.com/800x450.png?text=Your+Screenshot+Here)
+A complete, beautifully themed, and highly automated Hyprland setup designed for both aesthetics and productivity. This repository is more than just a collection of dotfiles; it's a full framework for creating, managing, and enjoying a dynamic desktop experience.
 
 ---
 
-## Features
+## ✨ Features
 
-- **Automated Installation:** A single script to install all packages and deploy configurations.
-- **Dynamic Theming:** Instantly switch between themes like Catppuccin and Tokyo Night across all applications.
-- **Powerful Shell:** Pre-configured Zsh with Starship, fzf, and useful aliases.
-- **Custom Widgets:** A sleek and functional bar and dashboard powered by AGS.
-- **Integrated Development Suite:** Full setup for Neovim, Tmux, and Lazygit.
-- **Gaming Ready:** Comes with Steam, Lutris, GameMode, and MangoHud pre-configured.
-- **Robust Scripting:** Custom scripts for screenshots, volume/brightness control, color picking, and more.
-- **Full GUI Theming:** Consistent look and feel for both terminal and graphical applications.
+* **Dynamic Theming Engine**: Switch between curated themes instantly or generate a new theme from any wallpaper using `pywal`. All components, from the terminal to the lock screen, are themed automatically.
 
-## Installation
+* **Stunning Visuals**: A beautiful and functional AGS setup featuring an advanced dashboard, a slide-out control center, interactive on-screen-displays (OSDs) for volume/brightness, and a personalized lock screen.
 
-1. **Start with a clean Arch Linux install.**
-2. **Clone the repository:**
+* **Intelligent Installer**: An interactive installer that detects your hardware (like NVIDIA GPUs), asks about your setup (Laptop/Desktop), and configures the system accordingly.
+
+* **TUI Rice Manager**: A user-friendly terminal menu (`rice-manager.sh`) to control your entire setup—switch themes, update the rice from GitHub, and verify the installation.
+
+* **Productivity Focused**: Comes with a pre-configured Neovim setup using `lazy.nvim`, a themed tmux environment, and integrated `lazygit` for a seamless development workflow.
+
+* **Gaming Ready**: Includes configurations for Steam, Lutris, MangoHud, and GameMode for an optimized gaming experience, right out of the box.
+
+* **Unified Shell Experience**: All components, from the bar to the control center, are designed to work together as a single, cohesive unit.
+
+---
+
+## 🚀 Installation
+
+> **Warning:** This script is designed to be run on a clean Arch Linux installation. Running it on a pre-configured system may cause conflicts. Please back up your existing dotfiles before proceeding.
+
+1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/YOUR_USERNAME/my-hypr-rice.git
+    git clone https://github.com/ChPuru/my-hypr-rice.git
     cd my-hypr-rice
     ```
 
-3. **Run the installer:**
+2. **Install `gum` (required for the installer's UI):**
 
     ```bash
-    chmod +x install.sh
+    sudo pacman -Syu gum
+    ```
+
+3. **Make the scripts executable:**
+
+    ```bash
+    chmod +x install.sh rice-manager.sh scripts/*.sh helpers/*.sh
+    ```
+
+4. **Run the installer:**
+
+    ```bash
     ./install.sh
     ```
 
-4. **Reboot** when prompted.
+    The script is interactive and will guide you through the process. After it completes, reboot your system to finalize the setup.
 
-## Usage
+---
 
-### Changing Themes
+## 💡 Post-Installation Usage
 
-To change the system-wide theme, run the `theme.sh` script with the name of a theme from the `/themes` directory.
+After rebooting, you can manage your entire rice using the TUI manager:
 
 ```bash
-./theme.sh tokyo-night
+./rice-manager.sh

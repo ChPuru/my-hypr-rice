@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
-# Stop on first error
 set -e
 
 # --- Globals ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 DOTFILES_DIR="$SCRIPT_DIR/dotfiles"
-# Stow targets the parent directory of the location of the dotfiles
 STOW_TARGET_DIR="$HOME"
 
 # --- Main Logic ---
-# The -v flag is for verbose, -R for restow (relink), -t for target.
-# We are stowing all directories inside the 'dotfiles' directory.
-# The 'dot' argument at the end tells stow to process all packages in the current directory.
-stow -v -R -t "$STOW_TARGET_DIR" --dir="$DOTFILES_DIR" .
+echo "Stowing all dotfiles for the full experience..."
+
+# Stow all application configs from the 'dotfiles' directory
+find "$DOTFILES_DIR" -maxdepth 1 -mindepth 1 -type d ! -name "ags" -exec stow -v -R -t "$STOW_TARGET_DIR" --dir="$DOTFILES_DIR" {} +
+
+# Stow the top-level scripts directory to ~/.config/scripts
+echo "Stowing scripts directory..."
+# The -t flag sets the target. We want the 'scripts' folder to land inside '.config'
+stow -v -R -t "$STOW_TARGET_DIR/.config" --dir="$SCRIPT_DIR" scripts
+
+echo "Stow complete."

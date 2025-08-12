@@ -1,0 +1,17 @@
+import { bar } from './modules/bar.js';
+import { dashboard } from './modules/dashboard.js';
+import { osd } from './modules/osd.js';
+import { control_center } from './modules/control-center.js'; // Import the new module
+import SystemService from './services/system.js';
+
+globalThis.system = SystemService;
+
+App.config({
+    style: './style.css',
+    windows: [
+        bar,
+        dashboard,
+        osd,
+        control_center, // Add the new window
+    ],
+});

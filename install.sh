@@ -6,48 +6,98 @@ set -e
 # --- Globals ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 LOG_FILE="/tmp/hypr-rice-install.log"
-REAL_USER=$(logname)
+
+# Find the real user even when run with sudo - declare and assign separately
+REAL_USER=""
+if [[ -n "$SUDO_USER" ]]; then
+    REAL_USER="$SUDO_USER"
+else
+    REAL_USER=$(whoami)
+fi
+
+HOME_DIR=""
+HOME_DIR=$(getent passwd "$REAL_USER" | cut -d: -f6)
+
+# --- Exported variables for other functions ---
+export INSTALL_NVIDIA="false"
+export INSTALL_LAPTOP_TOOLS="false"
+export AGS_CHOICE="Simple"
 
 # --- Helper Functions ---
-print_info() { printf "\e[34m[INFO]\e[0m %s\n" "$1"; }
-print_success() { printf "\e[32m[SUCCESS]\e[0m %s\n" "$1"; }
-print_warning() { printf "\e[33m[WARNING]\e[0m %s\n" "$1"; }
-print_error() { printf "\e[31m[ERROR]\e[0m %s\n" "$1" >&2; }
+print_info() { gum style --foreground 33 "[INFO]" " $1"; }
+print_success() { gum style --foreground 10 "[SUCCESS]" " $1"; }
+print_warning() { gum style --foreground 214 "[WARNING]" " $1"; }
+print_error() { gum style --foreground 9 "[ERROR]" " $1" >&2; }
 
 # --- Main Functions ---
 command_exists() { command -v "$1" &> /dev/null; }
 
 run_pre_install_checks() {
     print_info "Running pre-installation checks..."
-    if [[ $EUID -eq 0 ]]; then print_error "This script should not be run as root."; exit 1; fi
+    if [[ $EUID -eq 0 ]]; then print_error "This script should not be run as root. It will ask for sudo when needed."; exit 1; fi
+    if ! command_exists sudo; then print_error "'sudo' command not found. Please install it first."; exit 1; fi
     if ! sudo -v; then print_error "Sudo privileges are required."; exit 1; fi
     if ! ping -c 1 -W 1 archlinux.org &> /dev/null; then print_error "No internet connection."; exit 1; fi
+    if ! command_exists gum; then print_error "'gum' is not installed. Please install it first (sudo pacman -S gum)."; exit 1; fi
     print_success "Pre-installation checks passed."
 }
 
+ask_questions() {
+    gum style --border normal --margin "1" --padding "1" --border-foreground 212 "Welcome to the Hypr-Rice Installer!"
+
+    AGS_CHOICE=$(gum choose "Simple (A clean, basic bar)" "Advanced (Feature-rich dashboard & OSDs)")
+
+    if lspci | grep -E "NVIDIA|GeForce"; then
+        if gum confirm "NVIDIA GPU detected. Would you like to install NVIDIA proprietary drivers?"; then
+            INSTALL_NVIDIA="true"
+        fi
+    fi
+
+    local laptop_choice
+    laptop_choice=$(gum choose "Desktop" "Laptop")
+    if [[ "$laptop_choice" == "Laptop" ]]; then
+        INSTALL_LAPTOP_TOOLS="true"
+    fi
+}
+
 enable_multilib() {
-    print_info "Enabling Multilib repository..."
-    # This command is correct as-is. `sed -i` modifies the file directly
-    # and does not use shell redirection, so it doesn't trigger SC2024.
+    print_info "Enabling Multilib repository for Steam & Wine..."
     sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
     print_success "Multilib enabled."
 }
 
 install_pacman_packages() {
-    print_info "Updating package database and installing Pacman packages..."
-    # CORRECTED: Use tee for logging with sudo
-    sudo pacman -Syu --noconfirm --needed - <(sudo cat "$SCRIPT_DIR/packages/pacman-packages.txt") 2>&1 | sudo tee -a "$LOG_FILE" > /dev/null
-    print_success "Pacman packages installed."
+    print_info "Updating package database and installing packages..."
+    
+    {
+        # Combine core and full packages into one stream for installation
+        cat "$SCRIPT_DIR/packages/pacman-core.txt" "$SCRIPT_DIR/packages/pacman-full.txt" | sudo pacman -Syu --noconfirm --needed -
+        
+        if [[ "$INSTALL_NVIDIA" == "true" ]]; then
+            print_info "Installing NVIDIA drivers..."
+            sudo pacman -S --noconfirm --needed nvidia-dkms nvidia-utils lib32-nvidia-utils
+        fi
+        
+        if [[ "$INSTALL_LAPTOP_TOOLS" == "true" ]]; then
+            print_info "Installing laptop tools (tlp)..."
+            sudo pacman -S --noconfirm --needed tlp
+        fi
+    } >> "$LOG_FILE" 2>&1
+
+    print_success "All Pacman packages installed."
 }
 
 install_aur_helper() {
     if ! command_exists paru; then
         print_info "AUR helper 'paru' not found. Installing..."
-        # CORRECTED: Use tee for logging with sudo
-        sudo pacman -S --noconfirm --needed base-devel 2>&1 | sudo tee -a "$LOG_FILE" > /dev/null
-        # This part logs as the user, which is fine.
-        git clone https://aur.archlinux.org/paru.git /tmp/paru >> "$LOG_FILE" 2>&1
-        (cd /tmp/paru && makepkg -si --noconfirm) >> "$LOG_FILE" 2>&1
+        # --- MODIFICATION START ---
+        # Grouped commands to redirect output once, per shellcheck SC2129
+        {
+            sudo pacman -S --noconfirm --needed base-devel
+            git clone https://aur.archlinux.org/paru.git /tmp/paru
+            (cd /tmp/paru && makepkg -si --noconfirm)
+        } >> "$LOG_FILE" 2>&1
+        # --- MODIFICATION END ---
         print_success "'paru' installed."
     else
         print_info "'paru' is already installed."
@@ -56,44 +106,39 @@ install_aur_helper() {
 
 install_aur_packages() {
     print_info "Installing AUR packages..."
-    paru -S --noconfirm --needed - < "$SCRIPT_DIR/packages/aur-packages.txt" >> "$LOG_FILE" 2>&1
+    { paru -S --noconfirm --needed - < "$SCRIPT_DIR/packages/aur-packages.txt"; } >> "$LOG_FILE" 2>&1
     print_success "AUR packages installed."
 }
 
 setup_dotfiles() {
     print_info "Setting up dotfiles using Stow..."
     chmod +x "$SCRIPT_DIR/stow.sh"
-    "$SCRIPT_DIR/stow.sh" >> "$LOG_FILE" 2>&1
-    print_success "Dotfiles stowed."
-}
-
-setup_system_configs() {
-    print_info "Setting up system-level configurations..."
-    if [ -f /etc/tlp.conf ]; then
-        sudo mv /etc/tlp.conf /etc/tlp.conf.bak
+    
+    # This command stows all directories inside 'dotfiles' except for the AGS config that was NOT chosen.
+    if [[ "$AGS_CHOICE" == "Advanced (Feature-rich dashboard & OSDs)" ]]; then
+        print_info "Stowing Advanced AGS config and all other dotfiles..."
+        { find "$SCRIPT_DIR/dotfiles" -maxdepth 1 -mindepth 1 -type d ! -name "ags" -exec stow -v -R -t "$HOME_DIR" --dir="$SCRIPT_DIR/dotfiles" {} +; } >> "$LOG_FILE" 2>&1
+    else
+        print_info "Stowing Simple AGS config and all other dotfiles..."
+        { find "$SCRIPT_DIR/dotfiles" -maxdepth 1 -mindepth 1 -type d ! -name "ags-advanced" -exec stow -v -R -t "$HOME_DIR" --dir="$SCRIPT_DIR/dotfiles" {} +; } >> "$LOG_FILE" 2>&1
     fi
-    sudo cp "$HOME/.config/tlp/tlp.conf" /etc/tlp.conf
-    print_success "System configs deployed."
-}
 
-make_scripts_executable() {
-    print_info "Making custom scripts executable..."
-    chmod +x "$HOME/.config/scripts/"*
-    print_success "Scripts are now executable."
+    print_success "Dotfiles stowed."
 }
 
 apply_initial_theme() {
     print_info "Applying initial theme (catppuccin-mocha)..."
     chmod +x "$SCRIPT_DIR/theme.sh"
-    "$SCRIPT_DIR/theme.sh" catppuccin-mocha >> "$LOG_FILE" 2>&1
+    { "$SCRIPT_DIR/theme.sh" catppuccin-mocha; } >> "$LOG_FILE" 2>&1
     print_success "Initial theme applied."
 }
 
 setup_zsh() {
-    print_info "Setting up Zsh as the default shell..."
-    if [[ "$SHELL" != "/bin/zsh" ]]; then
-        # CORRECTED: Use tee for logging with sudo
-        sudo chsh -s /bin/zsh "$REAL_USER" 2>&1 | sudo tee -a "$LOG_FILE" > /dev/null
+    print_info "Setting up Zsh as the default shell for $REAL_USER..."
+    local current_shell
+    current_shell=$(getent passwd "$REAL_USER" | cut -d: -f7)
+    if [[ "$current_shell" != "/bin/zsh" ]]; then
+        { sudo chsh -s /bin/zsh "$REAL_USER"; } >> "$LOG_FILE" 2>&1
         print_success "Default shell changed to Zsh."
     else
         print_info "Zsh is already the default shell."
@@ -102,44 +147,48 @@ setup_zsh() {
 
 enable_services() {
     print_info "Enabling systemd services..."
-    # CORRECTED: Use tee for logging with sudo
-    sudo systemctl enable ly.service 2>&1 | sudo tee -a "$LOG_FILE" > /dev/null
-    sudo systemctl enable bluetooth.service 2>&1 | sudo tee -a "$LOG_FILE" > /dev/null
-    sudo systemctl enable gamemoded 2>&1 | sudo tee -a "$LOG_FILE" > /dev/null
-    sudo systemctl enable tlp.service 2>&1 | sudo tee -a "$LOG_FILE" > /dev/null
+    {
+        sudo systemctl enable ly.service
+        sudo systemctl enable bluetooth.service
+        sudo systemctl enable gamemoded
+        if [[ "$INSTALL_LAPTOP_TOOLS" == "true" ]]; then
+            sudo systemctl enable tlp.service
+        fi
+    } >> "$LOG_FILE" 2>&1
     print_success "Systemd services enabled."
 }
 
 # --- Main Execution ---
 main() {
-    # This creates the log file as the user, giving them ownership.
+    # Clear log file for a fresh run
     true > "$LOG_FILE"
-    
+
     run_pre_install_checks
-    print_warning "This script will install packages and configure your system."
-    
-    # CORRECTED: Use read -r
-    read -r -p "Do you want to proceed? (y/N): " choice
-    if [[ "$choice" != "y" && "$choice" != "Y" ]]; then print_error "Installation aborted."; exit 0; fi
+    ask_questions
 
-    enable_multilib
-    install_pacman_packages
-    install_aur_helper
-    install_aur_packages
-    setup_dotfiles
-    setup_system_configs
-    make_scripts_executable
-    apply_initial_theme
-    setup_zsh
-    enable_services
+    if ! gum confirm "Ready to start the installation? This will install packages and configure your system."; then
+        print_error "Installation aborted by user."
+        exit 0
+    fi
 
-    print_success "Project Complete! Your Hyprland rice is fully installed."
-    print_warning "IMPORTANT: Edit ~/.config/kanshi/config with your monitor names to enable multi-monitor support."
-    print_info "It is highly recommended to reboot your system now."
+    # --- Installation Steps ---
+    gum spin --spinner dot --title "Enabling multilib..." -- bash -c "enable_multilib"
+    gum spin --spinner dot --title "Installing Pacman packages..." -- bash -c "install_pacman_packages"
+    gum spin --spinner dot --title "Installing AUR helper (paru)..." -- bash -c "install_aur_helper"
+    # Run paru as the real user
+    gum spin --spinner dot --title "Installing AUR packages..." -- sudo -u "$REAL_USER" bash -c "install_aur_packages"
+    gum spin --spinner dot --title "Stowing dotfiles..." -- bash -c "setup_dotfiles"
+    gum spin --spinner dot --title "Applying initial theme..." -- bash -c "apply_initial_theme"
+    gum spin --spinner dot --title "Setting up Zsh..." -- bash -c "setup_zsh"
+    gum spin --spinner dot --title "Enabling systemd services..." -- bash -c "enable_services"
+
+    print_success "Installation complete!"
+    print_info "A log file is available at $LOG_FILE"
     
-    # CORRECTED: Use read -r
-    read -r -p "Reboot now? (y/N): " reboot_choice
-    if [[ "$reboot_choice" == "y" || "$reboot_choice" == "Y" ]]; then sudo reboot; fi
+    if gum confirm "It is highly recommended to reboot now. Reboot?"; then
+        sudo reboot
+    fi
 }
 
-main
+# Run main function, passing all arguments to it
+main "$@"

@@ -2,6 +2,8 @@
   "wallpaper": "/home/puru/Pictures/wallpapers/catppuccin-mocha.png",
   "font_main": "JetBrainsMono Nerd Font",
   "font_size": "11",
+  "lockscreen_image": "/home/puru/.config/hypr/assets/lock-image.png",
+  "lockscreen_welcome_text": "Welcome back, Puru!",
   "nvim_theme": "catppuccin",
   "gtk_theme": "Catppuccin-Mocha-Standard-Blue-dark",
   "kvantum_theme": "Catppuccin-Mocha",

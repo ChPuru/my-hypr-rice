@@ -1,0 +1,10 @@
+# Cache files
+.cache/
+*.log
+*.swp
+
+# Node modules for AGS development
+node_modules/
+
+# User-specific files
+/themes/custom-theme.json

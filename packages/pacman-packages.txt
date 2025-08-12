@@ -76,3 +76,10 @@ swappy
 grim
 slurp
 wl-clipboard
+
+# --- Visuals & TUI ---
+imagemagick
+gum
+
+# --- Theming Engine ---
+python-pywal
