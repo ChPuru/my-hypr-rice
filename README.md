@@ -1,7 +1,6 @@
 # My Hypr-Rice: A Dynamic & Themed Hyprland Framework
 
 ![Showcase](docs/showcase.png)
-*(Note: You will need to add a screenshot named `showcase.png` to the `docs` folder for this to display)*
 
 A complete, beautifully themed, and highly automated Hyprland setup designed for both aesthetics and productivity. This repository is more than just a collection of dotfiles; it's a full framework for creating, managing, and enjoying a dynamic desktop experience.
 
