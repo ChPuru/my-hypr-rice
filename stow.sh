@@ -4,33 +4,30 @@ set -e
 
 # --- Globals ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-DOTFILES_DIR="$SCRIPT_DIR/dotfiles"
+DOTFILES_DIR="dotfiles" # Use a relative path, it's cleaner
 STOW_TARGET_DIR="$HOME"
 
 # --- Main Logic ---
 echo "Stowing all dotfiles for the full experience..."
 
-# Change into the dotfiles directory to work with clean package names
-cd "$DOTFILES_DIR"
+# We stay in the root directory of the project.
+# The --dir flag tells stow that all our packages are located inside the 'dotfiles' folder.
 
-# Stow all directories inside this folder, EXCEPT for the simple 'ags' config.
-# We use a loop to call stow on each directory individually.
-for dir in */; do
-    # Remove the trailing slash from the directory name
-    pkg_name="${dir%/}"
-    
-    # Skip the 'ags' directory, as we want 'ags-advanced'
-    if [ "$pkg_name" != "ags" ]; then
-        echo "Stowing package: $pkg_name"
-        # The --dir is now '..' because we are inside the dotfiles folder.
-        # The target is our home directory.
-        stow -v -R -t "$STOW_TARGET_DIR" --dir=".." "$pkg_name"
+# Get a list of all directories inside 'dotfiles'
+# We use find to get clean names without './'
+PACKAGES=$(find "$DOTFILES_DIR" -maxdepth 1 -mindepth 1 -type d -printf "%f\n")
+
+for pkg in $PACKAGES; do
+    # Skip the simple 'ags' config, as we want the advanced one
+    if [ "$pkg" != "ags" ]; then
+        echo "Stowing package: $pkg"
+        stow -v -R -t "$STOW_TARGET_DIR" --dir="$DOTFILES_DIR" "$pkg"
     fi
 done
 
 # Stow the top-level scripts directory separately
 echo "Stowing scripts directory..."
-cd "$SCRIPT_DIR"
+# The --dir is '.' because 'scripts' is in the current directory.
 stow -v -R -t "$STOW_TARGET_DIR/.config" --dir="." "scripts"
 
 echo "Stow complete."
