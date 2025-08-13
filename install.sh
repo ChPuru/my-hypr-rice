@@ -70,7 +70,6 @@ install_pacman_packages() {
     print_info "Updating package database and installing packages..."
     
     {
-        # Combine core and full packages into one stream for installation
         cat "$SCRIPT_DIR/packages/pacman-core.txt" "$SCRIPT_DIR/packages/pacman-full.txt" | sudo pacman -Syu --noconfirm --needed -
         
         if [[ "$INSTALL_NVIDIA" == "true" ]]; then
@@ -90,14 +89,11 @@ install_pacman_packages() {
 install_aur_helper() {
     if ! command_exists paru; then
         print_info "AUR helper 'paru' not found. Installing..."
-        # --- MODIFICATION START ---
-        # Grouped commands to redirect output once, per shellcheck SC2129
         {
             sudo pacman -S --noconfirm --needed base-devel
             git clone https://aur.archlinux.org/paru.git /tmp/paru
             (cd /tmp/paru && makepkg -si --noconfirm)
         } >> "$LOG_FILE" 2>&1
-        # --- MODIFICATION END ---
         print_success "'paru' installed."
     else
         print_info "'paru' is already installed."
@@ -114,7 +110,6 @@ setup_dotfiles() {
     print_info "Setting up dotfiles using Stow..."
     chmod +x "$SCRIPT_DIR/stow.sh"
     
-    # This command stows all directories inside 'dotfiles' except for the AGS config that was NOT chosen.
     if [[ "$AGS_CHOICE" == "Advanced (Feature-rich dashboard & OSDs)" ]]; then
         print_info "Stowing Advanced AGS config and all other dotfiles..."
         { find "$SCRIPT_DIR/dotfiles" -maxdepth 1 -mindepth 1 -type d ! -name "ags" -exec stow -v -R -t "$HOME_DIR" --dir="$SCRIPT_DIR/dotfiles" {} +; } >> "$LOG_FILE" 2>&1
@@ -158,6 +153,18 @@ enable_services() {
     print_success "Systemd services enabled."
 }
 
+# --- MODIFICATION START ---
+# Export all functions that will be called by 'gum spin'
+export -f enable_multilib
+export -f install_pacman_packages
+export -f install_aur_helper
+export -f install_aur_packages
+export -f setup_dotfiles
+export -f apply_initial_theme
+export -f setup_zsh
+export -f enable_services
+# --- MODIFICATION END ---
+
 # --- Main Execution ---
 main() {
     # Clear log file for a fresh run
@@ -170,6 +177,10 @@ main() {
         print_error "Installation aborted by user."
         exit 0
     fi
+
+    # Validate sudo timestamp before starting spinners
+    print_info "Authenticating sudo... Please enter your password if prompted."
+    sudo -v
 
     # --- Installation Steps ---
     gum spin --spinner dot --title "Enabling multilib..." -- bash -c "enable_multilib"

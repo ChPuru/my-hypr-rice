@@ -8,12 +8,10 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 12 19:22:21 2025
+# Make data base, printed on Wed Aug 13 14:43:03 2025
 
 # Variables
 
-# environment
-FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -39,15 +37,15 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_23468_EHIJKXMINTXZPULD
-# environment
-FPS_BROWSER_USER_PROFILE_STRING = Default
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_15212_IUDPUPSBLSPSGMAG
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
 # automatic
 %D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
+# environment
+EFC_14228_1262719628 = 1
 # automatic
 ^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
 # automatic
@@ -71,8 +69,6 @@ ONEDRIVE = C:\Users\Lenovo\OneDrive
 # makefile
 CURDIR := c:/Users/Lenovo/Desktop/my-hypr-rice
 # environment
-EFC_10984_2283032206 = 1
-# environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 VSCODE_L10N_BUNDLE_LOCATION = 
@@ -88,12 +84,14 @@ MFLAGS = -pqrR
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # automatic
 +D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
+# environment
+EFC_14228_1592913036 = 1
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 23468
+VSCODE_PID = 15212
 # environment
 CUDA_PATH = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0
 # automatic
@@ -104,8 +102,6 @@ CUDA_PATH_V12_3 = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3
 *F = $(notdir $*)
 # automatic
 <D = $(patsubst %/,%,$(patsubst %\,%,$(dir $<)))
-# environment
-EFC_10984_2775293581 = 1
 # environment
 VSCODE_NLS_CONFIG = {"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"C:\\Program Files\\Microsoft VS Code\\resources\\app\\out\\nls.messages.json","locale":"en-us","availableLanguages":{}}
 # default
@@ -153,8 +149,6 @@ COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # environment
 PROGRAMW6432 = C:\Program Files
 # environment
-EFC_10984_3789132940 = 1
-# environment
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
 # automatic
 +F = $(notdir $+)
@@ -166,14 +160,16 @@ USERDOMAIN = LAPTOP-OAVDDQKT
 GNUMAKEFLAGS := 
 # environment
 OS = Windows_NT
+# environment
+EFC_14228_3789132940 = 1
 # makefile
 .DEFAULT_GOAL := 
 # default
 MAKE_VERSION := 4.4.1
 # environment
-EFC_10984_1592913036 = 1
-# environment
 PROGRAMFILES(X86) = C:\Program Files (x86)
+# environment
+EFC_14228_2283032206 = 1
 # environment
 USERDOMAIN_ROAMINGPROFILE = LAPTOP-OAVDDQKT
 # environment
@@ -187,8 +183,6 @@ APPDATA = C:\Users\Lenovo\AppData\Roaming
 # environment
 HOMEDRIVE = C:
 # environment
-EFC_10984_1262719628 = 1
-# environment
 PROCESSOR_ARCHITECTURE = x86
 # environment
 COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
@@ -197,12 +191,13 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\Lenovo\AppData\Local\Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\bd59bc98-1.103.0-main-soc 
-k
+VSCODE_IPC_HOOK = \\.\pipe\bd59bc98-1.103.0-main-sock
 # default
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
+# environment
+EFC_14228_2775293581 = 1
 # default
 SUFFIXES := 
 # environment
@@ -222,7 +217,7 @@ CHOCOLATEYTOOLSLOCATION = C:\tools
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
 # variable set hash-table stats:
-# Load=104/1024=10%, Rehash=0, Collisions=12/131=9%
+# Load=102/1024=10%, Rehash=0, Collisions=11/129=9%
 
 # Pattern-specific Variable Values
 
@@ -230,9 +225,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/Lenovo/Desktop/my-hypr-rice, mtime 1754932208): 32 files, no impossibilities.
+# . (key c:/Users/Lenovo/Desktop/my-hypr-rice, mtime 1755009229): 34 files, no impossibilities.
 
-# 32 files, no impossibilities in 1 directories.
+# 34 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -269,12 +264,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 35 / storage = 313 B / avg = 8 B
-# current buf: size = 8174 B / used = 313 B / count = 35 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 37 / storage = 337 B / avg = 9 B
+# current buf: size = 8174 B / used = 337 B / count = 37 / avg = 9 B
 
-# strcache performance: lookups = 39 / hit rate = 10%
+# strcache performance: lookups = 41 / hit rate = 9%
 # hash-table stats:
-# Load=35/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Tue Aug 12 19:22:21 2025
+# Load=37/8192=0%, Rehash=0, Collisions=0/41=0%
+# Finished Make data base on Wed Aug 13 14:43:03 2025
 
  
