@@ -1,0 +1,31 @@
+# --- Core System & Shell ---
+git
+stow
+jq
+zsh
+starship
+eza
+bat
+fzf
+zoxide
+unzip
+bluez
+bluez-utils
+pavucontrol
+brightnessctl
+playerctl
+gum
+
+# --- Core Desktop ---
+hyprland
+hyprlock
+swww
+swaync
+wlogout
+
+# --- Core Fonts & Theming ---
+noto-fonts
+noto-fonts-emoji
+ttf-jetbrains-mono-nerd
+papirus-icon-theme
+catppuccin-gtk-theme-mocha

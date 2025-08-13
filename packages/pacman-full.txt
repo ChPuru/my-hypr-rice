@@ -1,0 +1,25 @@
+# --- Full Desktop Experience ---
+ags
+kitty
+wofi
+thunar
+nwg-look
+qt6ct
+kvantum
+fastfetch
+cava
+imagemagick
+
+# --- Full Productivity ---
+neovim
+tmux
+lazygit
+github-cli
+
+# --- Full Gaming ---
+steam
+lutris
+gamemode
+mangohud
+gamescope
+wine-staging
