@@ -92,14 +92,12 @@ fi
 
 # Stow the scripts directory
 echo "Stowing scripts directory..."
+# Go back to project root for scripts
+PROJECT_ROOT="$(dirname "$DOTFILES_DIR")"
+cd "$PROJECT_ROOT"
+
 if [[ -d "scripts" ]]; then
     if stow -v -R -t "$STOW_TARGET_CONFIG" --dir="." "scripts"; then
-        echo "✓ Successfully stowed scripts"
-    else
-        echo "✗ Failed to stow scripts"
-    fi
-elif [[ -d "$DOTFILES_DIR/scripts" ]]; then
-    if stow -v -R -t "$STOW_TARGET_CONFIG" --dir="$DOTFILES_DIR" "scripts"; then
         echo "✓ Successfully stowed scripts"
     else
         echo "✗ Failed to stow scripts"
