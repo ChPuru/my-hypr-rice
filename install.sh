@@ -106,10 +106,12 @@ install_aur_helper() {
 }
 
 install_aur_packages() {
-    # --- MODIFICATION START ---
-    # Use the full path to the packages file
-    paru -S --noconfirm --needed - < "$SCRIPT_DIR/packages/aur-packages.txt" 2>&1 | tee -a "$LOG_FILE"
-    # --- MODIFICATION END ---
+    # This function now expects the script directory path as its first argument
+    local script_dir="$1"
+    
+    print_info "Installing AUR packages..."
+    # Use the passed-in path to find the file
+    paru -S --noconfirm --needed - < "$script_dir/packages/aur-packages.txt" 2>&1 | tee -a "$LOG_FILE"
 }
 
 setup_dotfiles() {
@@ -151,6 +153,7 @@ enable_services() {
 }
 
 # --- Main Execution ---
+# --- Main Execution ---
 main() {
     true > "$LOG_FILE"
     run_pre_install_checks
@@ -177,9 +180,9 @@ main() {
 
     print_info "Step 4: Installing AUR packages..."
     # --- MODIFICATION START ---
-    # Export the SCRIPT_DIR variable and the function itself to the subshell
-    export SCRIPT_DIR
-    sudo -u "$REAL_USER" bash -c "$(declare -f install_aur_packages); install_aur_packages"
+    # We now pass the SCRIPT_DIR variable directly to the function call.
+    # The outer shell expands "$SCRIPT_DIR" before the command is run.
+    sudo -u "$REAL_USER" bash -c "$(declare -f install_aur_packages); install_aur_packages '$SCRIPT_DIR'"
     # --- MODIFICATION END ---
     print_success "AUR packages installed."
 
