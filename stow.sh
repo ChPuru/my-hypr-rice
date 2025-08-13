@@ -10,12 +10,27 @@ STOW_TARGET_DIR="$HOME"
 # --- Main Logic ---
 echo "Stowing all dotfiles for the full experience..."
 
-# Stow all application configs from the 'dotfiles' directory
-find "$DOTFILES_DIR" -maxdepth 1 -mindepth 1 -type d ! -name "ags" -exec stow -v -R -t "$STOW_TARGET_DIR" --dir="$DOTFILES_DIR" {} +
+# Change into the dotfiles directory to work with clean package names
+cd "$DOTFILES_DIR"
 
-# Stow the top-level scripts directory to ~/.config/scripts
+# Stow all directories inside this folder, EXCEPT for the simple 'ags' config.
+# We use a loop to call stow on each directory individually.
+for dir in */; do
+    # Remove the trailing slash from the directory name
+    pkg_name="${dir%/}"
+    
+    # Skip the 'ags' directory, as we want 'ags-advanced'
+    if [ "$pkg_name" != "ags" ]; then
+        echo "Stowing package: $pkg_name"
+        # The --dir is now '..' because we are inside the dotfiles folder.
+        # The target is our home directory.
+        stow -v -R -t "$STOW_TARGET_DIR" --dir=".." "$pkg_name"
+    fi
+done
+
+# Stow the top-level scripts directory separately
 echo "Stowing scripts directory..."
-# The -t flag sets the target. We want the 'scripts' folder to land inside '.config'
-stow -v -R -t "$STOW_TARGET_DIR/.config" --dir="$SCRIPT_DIR" scripts
+cd "$SCRIPT_DIR"
+stow -v -R -t "$STOW_TARGET_DIR/.config" --dir="." "scripts"
 
 echo "Stow complete."
