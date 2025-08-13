@@ -77,7 +77,10 @@ install_aur_helper() {
         sudo pacman -S --noconfirm --needed base-devel 2>&1 | tee -a "$LOG_FILE"
         
         # --- MODIFICATION START ---
-        # Retry git clone up to 3 times if it fails
+        # Clean up any previous failed attempts before cloning
+        rm -rf /tmp/paru
+        # --- MODIFICATION END ---
+
         local retries=3
         while [ $retries -gt 0 ]; do
             if git clone https://aur.archlinux.org/paru.git /tmp/paru; then
@@ -92,7 +95,6 @@ install_aur_helper() {
             print_error "Failed to clone paru repository after multiple attempts."
             exit 1
         fi
-        # --- MODIFICATION END ---
 
         (
             cd /tmp/paru
