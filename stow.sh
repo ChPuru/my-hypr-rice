@@ -10,13 +10,87 @@ STOW_TARGET_DIR="$HOME"
 # --- Main Logic ---
 echo "Stowing all dotfiles for the full experience..."
 
-# Get a list of all directories inside 'dotfiles', excluding the simple 'ags' config.
-# This is the clean and correct way to build the package list.
-PACKAGES_TO_STOW=$(find "$DOTFILES_DIR" -maxdepth 1 -mindepth 1 -type d -not -name "ags" -printf "%f ")
+# Define an explicit list of all packages to be stowed from the 'dotfiles' directory.
+# This is the most robust method.
+PACKAGES=(
+    ags-advanced
+    alacritty
+    anyrun
+    auto-cpufreq
+    avizo
+    bash
+    bottom
+    btop
+    cava
+    cool-retro-term
+    dolphin
+    dunst
+    eww
+    fastfetch
+    fish
+    fnott
+    fontconfig
+    foot
+    fuzzel
+    gamemode
+    gammastep
+    git
+    glava
+    gtk-3.0
+    gtk-4.0
+    helix
+    htop
+    hypr
+    hyprlock
+    hyprnotify
+    hyprpaper
+    ironbar
+    kanshi
+    kitty
+    kvantum
+    lutris
+    ly
+    mako
+    mangohud
+    mpv
+    nemo
+    neofetch
+    nvim
+    nwg-dock-hyprland
+    nwg-look
+    nwg-panel
+    pipewire
+    qt5ct
+    qt6ct
+    ranger
+    rofi
+    starship
+    swaybg
+    swaylock
+    swaylock-effects
+    swaync
+    swww
+    thunar
+    tlp
+    tmux
+    tofi
+    vis
+    waybar
+    wezterm
+    wireplumber
+    wlogout
+    wlsunset
+    wluma
+    wofi
+    wpaperd
+    yambar
+    yazi
+    zathura
+    zsh
+)
 
 # Call stow ONCE with the correct stow directory and the full list of packages.
-# This is the standard, most robust way to use stow.
-stow -v -R -t "$STOW_TARGET_DIR" --dir="$DOTFILES_DIR" "$PACKAGES_TO_STOW"
+stow -v -R -t "$STOW_TARGET_DIR" --dir="$DOTFILES_DIR" "${PACKAGES[@]}"
 
 # Stow the top-level scripts directory separately
 echo "Stowing scripts directory..."
