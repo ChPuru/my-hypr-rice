@@ -7,11 +7,6 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 LOG_FILE="/tmp/hypr-rice-install.log"
 
-# --- MODIFICATION START ---
-# Export the SCRIPT_DIR variable so subshells can see it.
-export SCRIPT_DIR
-# --- MODIFICATION END ---
-
 # Find the real user even when run with sudo
 REAL_USER="${SUDO_USER:-$(whoami)}"
 HOME_DIR=$(getent passwd "$REAL_USER" | cut -d: -f6)
@@ -59,87 +54,70 @@ ask_questions() {
 }
 
 enable_multilib() {
-    print_info "Enabling Multilib repository for Steam & Wine..."
-    sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-    print_success "Multilib enabled."
+    sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf 2>&1 | tee -a "$LOG_FILE"
 }
 
 install_pacman_packages() {
-    print_info "Updating package database and installing packages..."
+    # Combine core and full packages into one stream for installation
+    cat "$SCRIPT_DIR/packages/pacman-core.txt" "$SCRIPT_DIR/packages/pacman-full.txt" | sudo pacman -Syu --noconfirm --needed - 2>&1 | tee -a "$LOG_FILE"
     
-    {
-        cat "$SCRIPT_DIR/packages/pacman-core.txt" "$SCRIPT_DIR/packages/pacman-full.txt" | sudo pacman -Syu --noconfirm --needed -
-        
-        if [[ "$INSTALL_NVIDIA" == "true" ]]; then
-            print_info "Installing NVIDIA drivers..."
-            sudo pacman -S --noconfirm --needed nvidia-dkms nvidia-utils lib32-nvidia-utils
-        fi
-        
-        if [[ "$INSTALL_LAPTOP_TOOLS" == "true" ]]; then
-            print_info "Installing laptop tools (tlp)..."
-            sudo pacman -S --noconfirm --needed tlp
-        fi
-    } >> "$LOG_FILE" 2>&1
-
-    print_success "All Pacman packages installed."
+    if [[ "$INSTALL_NVIDIA" == "true" ]]; then
+        print_info "Installing NVIDIA drivers..."
+        sudo pacman -S --noconfirm --needed nvidia-dkms nvidia-utils lib32-nvidia-utils 2>&1 | tee -a "$LOG_FILE"
+    fi
+    
+    if [[ "$INSTALL_LAPTOP_TOOLS" == "true" ]]; then
+        print_info "Installing laptop tools (tlp)..."
+        sudo pacman -S --noconfirm --needed tlp 2>&1 | tee -a "$LOG_FILE"
+    fi
 }
 
 install_aur_helper() {
     if ! command_exists paru; then
         print_info "AUR helper 'paru' not found. Installing..."
-        {
-            sudo pacman -S --noconfirm --needed base-devel
+        sudo pacman -S --noconfirm --needed base-devel 2>&1 | tee -a "$LOG_FILE"
+        (
             git clone https://aur.archlinux.org/paru.git /tmp/paru
-            (cd /tmp/paru && makepkg -si --noconfirm)
-        } >> "$LOG_FILE" 2>&1
-        print_success "'paru' installed."
+            cd /tmp/paru
+            makepkg -si --noconfirm
+        ) 2>&1 | tee -a "$LOG_FILE"
     else
         print_info "'paru' is already installed."
     fi
 }
 
 install_aur_packages() {
-    print_info "Installing AUR packages..."
-    { paru -S --noconfirm --needed - < "$SCRIPT_DIR/packages/aur-packages.txt"; } >> "$LOG_FILE" 2>&1
-    print_success "AUR packages installed."
+    paru -S --noconfirm --needed - < "$SCRIPT_DIR/packages/aur-packages.txt" 2>&1 | tee -a "$LOG_FILE"
 }
 
 setup_dotfiles() {
-    print_info "Setting up dotfiles using Stow..."
     chmod +x "$SCRIPT_DIR/stow.sh"
     
     if [[ "$AGS_CHOICE" == "Advanced (Feature-rich dashboard & OSDs)" ]]; then
         print_info "Stowing Advanced AGS config and all other dotfiles..."
-        { find "$SCRIPT_DIR/dotfiles" -maxdepth 1 -mindepth 1 -type d ! -name "ags" -exec stow -v -R -t "$HOME_DIR" --dir="$SCRIPT_DIR/dotfiles" {} +; } >> "$LOG_FILE" 2>&1
+        find "$SCRIPT_DIR/dotfiles" -maxdepth 1 -mindepth 1 -type d ! -name "ags" -exec stow -v -R -t "$HOME_DIR" --dir="$SCRIPT_DIR/dotfiles" {} + 2>&1 | tee -a "$LOG_FILE"
     else
         print_info "Stowing Simple AGS config and all other dotfiles..."
-        { find "$SCRIPT_DIR/dotfiles" -maxdepth 1 -mindepth 1 -type d ! -name "ags-advanced" -exec stow -v -R -t "$HOME_DIR" --dir="$SCRIPT_DIR/dotfiles" {} +; } >> "$LOG_FILE" 2>&1
+        find "$SCRIPT_DIR/dotfiles" -maxdepth 1 -mindepth 1 -type d ! -name "ags-advanced" -exec stow -v -R -t "$HOME_DIR" --dir="$SCRIPT_DIR/dotfiles" {} + 2>&1 | tee -a "$LOG_FILE"
     fi
-
-    print_success "Dotfiles stowed."
 }
 
 apply_initial_theme() {
-    print_info "Applying initial theme (catppuccin-mocha)..."
     chmod +x "$SCRIPT_DIR/theme.sh"
-    { "$SCRIPT_DIR/theme.sh" catppuccin-mocha; } >> "$LOG_FILE" 2>&1
-    print_success "Initial theme applied."
+    "$SCRIPT_DIR/theme.sh" catppuccin-mocha 2>&1 | tee -a "$LOG_FILE"
 }
 
 setup_zsh() {
-    print_info "Setting up Zsh as the default shell for $REAL_USER..."
     local current_shell
     current_shell=$(getent passwd "$REAL_USER" | cut -d: -f7)
     if [[ "$current_shell" != "/bin/zsh" ]]; then
-        { sudo chsh -s /bin/zsh "$REAL_USER"; } >> "$LOG_FILE" 2>&1
-        print_success "Default shell changed to Zsh."
+        sudo chsh -s /bin/zsh "$REAL_USER" 2>&1 | tee -a "$LOG_FILE"
     else
         print_info "Zsh is already the default shell."
     fi
 }
 
 enable_services() {
-    print_info "Enabling systemd services..."
     {
         sudo systemctl enable ly.service
         sudo systemctl enable bluetooth.service
@@ -147,17 +125,8 @@ enable_services() {
         if [[ "$INSTALL_LAPTOP_TOOLS" == "true" ]]; then
             sudo systemctl enable tlp.service
         fi
-    } >> "$LOG_FILE" 2>&1
-    print_success "Systemd services enabled."
+    } 2>&1 | tee -a "$LOG_FILE"
 }
-
-# This is the "function router".
-# If the script is called with an argument, it will only run that function and then exit.
-if [[ -n "$1" ]]; then
-    # Call the function passed as the first argument
-    "$1"
-    exit 0
-fi
 
 # --- Main Execution ---
 main() {
@@ -172,26 +141,47 @@ main() {
         exit 0
     fi
 
-    # Validate sudo timestamp before starting spinners
+    # Validate sudo timestamp before starting
     print_info "Authenticating sudo... Please enter your password if prompted."
     sudo -v
 
     # --- Installation Steps ---
-    # --- MODIFICATION START ---
-    # We now call the script using its full, absolute path ($SCRIPT_DIR/install.sh)
-    # This is the most robust way to ensure the subshell can find it.
-    gum spin --spinner dot --title "Enabling multilib..." -- bash -c "$SCRIPT_DIR/install.sh enable_multilib"
-    gum spin --spinner dot --title "Installing Pacman packages..." -- bash -c "$SCRIPT_DIR/install.sh install_pacman_packages"
-    gum spin --spinner dot --title "Installing AUR helper (paru)..." -- bash -c "$SCRIPT_DIR/install.sh install_aur_helper"
-    # Run paru as the real user
-    gum spin --spinner dot --title "Installing AUR packages..." -- sudo -u "$REAL_USER" bash -c "$SCRIPT_DIR/install.sh install_aur_packages"
-    gum spin --spinner dot --title "Stowing dotfiles..." -- bash -c "$SCRIPT_DIR/install.sh setup_dotfiles"
-    gum spin --spinner dot --title "Applying initial theme..." -- bash -c "$SCRIPT_DIR/install.sh apply_initial_theme"
-    gum spin --spinner dot --title "Setting up Zsh..." -- bash -c "$SCRIPT_DIR/install.sh setup_zsh"
-    gum spin --spinner dot --title "Enabling systemd services..." -- bash -c "$SCRIPT_DIR/install.sh enable_services"
-    # --- MODIFICATION END ---
+    print_info "--- Starting Installation ---"
 
-    print_success "Installation complete!"
+    print_info "Step 1: Enabling multilib..."
+    enable_multilib
+    print_success "Multilib enabled."
+
+    print_info "Step 2: Installing Pacman packages..."
+    install_pacman_packages
+    print_success "Pacman packages installed."
+
+    print_info "Step 3: Installing AUR helper (paru)..."
+    install_aur_helper
+    print_success "AUR helper installed."
+
+    print_info "Step 4: Installing AUR packages..."
+    # Run paru as the real user
+    sudo -u "$REAL_USER" bash -c "$(declare -f install_aur_packages); install_aur_packages"
+    print_success "AUR packages installed."
+
+    print_info "Step 5: Stowing dotfiles..."
+    setup_dotfiles
+    print_success "Dotfiles stowed."
+
+    print_info "Step 6: Applying initial theme..."
+    apply_initial_theme
+    print_success "Initial theme applied."
+
+    print_info "Step 7: Setting up Zsh..."
+    setup_zsh
+    print_success "Zsh setup complete."
+
+    print_info "Step 8: Enabling systemd services..."
+    enable_services
+    print_success "Systemd services enabled."
+
+    print_success "--- Installation Complete! ---"
     print_info "A log file is available at $LOG_FILE"
     
     if gum confirm "It is highly recommended to reboot now. Reboot?"; then
@@ -199,5 +189,5 @@ main() {
     fi
 }
 
-# Run main function, passing all arguments to it
-main "$@"
+# Run main function
+main
