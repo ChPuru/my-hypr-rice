@@ -1,15 +1,28 @@
 #!/usr/bin/env bash
 set -e
+echo "--- Starting Directory Restructuring ---"
 cd dotfiles
+
 for dir in */; do
     pkg_name="${dir%/}"
-    if [ "$pkg_name" != "git" ] && [ "$pkg_name" != "zsh" ]; then
-        echo "Restructuring $pkg_name..."
-        # Create the target directory
-        mkdir -p "$pkg_name/.config"
-        # Move all files from the package root into the new .config subdir
-        # Note the quotes around "$pkg_name" to fix the shellcheck warning.
-        mv "$pkg_name"/* "$pkg_name/.config/" 2>/dev/null || true
+    echo "Processing package: $pkg_name"
+
+    # Create a temporary directory for the correct structure
+    mkdir -p "/tmp/restructure/$pkg_name"
+
+    if [[ "$pkg_name" == "git" || "$pkg_name" == "zsh" ]]; then
+        # These packages go directly into the home directory
+        mv "$pkg_name"/* "/tmp/restructure/$pkg_name/"
+    else
+        # All other packages go into .config
+        mkdir -p "/tmp/restructure/$pkg_name/.config/$pkg_name"
+        mv "$pkg_name"/* "/tmp/restructure/$pkg_name/.config/$pkg_name/" 2>/dev/null || true
     fi
+
+    # Replace the old, incorrect directory with the new, correct one
+    rm -rf "$pkg_name"
+    mv "/tmp/restructure/$pkg_name" .
 done
-echo "Restructuring complete."
+
+rm -rf "/tmp/restructure"
+echo "--- Restructuring Complete ---"
