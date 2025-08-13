@@ -12,12 +12,12 @@ for dir in */; do
 
     if [[ "$pkg_name" == "git" || "$pkg_name" == "zsh" ]]; then
         # These packages go directly into the home directory
-        # MODIFICATION: Added '2>/dev/null || true' to handle empty directories
+        # Double quotes fix SC2086
         mv "$pkg_name"/* "/tmp/restructure/$pkg_name/" 2>/dev/null || true
     else
         # All other packages go into .config
         mkdir -p "/tmp/restructure/$pkg_name/.config/$pkg_name"
-        # MODIFICATION: Added '2>/dev/null || true' to handle empty directories
+        # Double quotes fix SC2086
         mv "$pkg_name"/* "/tmp/restructure/$pkg_name/.config/$pkg_name/" 2>/dev/null || true
     fi
 
