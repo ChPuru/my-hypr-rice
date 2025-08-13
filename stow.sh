@@ -3,7 +3,7 @@
 set -e
 
 # --- Globals ---
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+# SCRIPT_DIR is removed as it is no longer used.
 DOTFILES_DIR="dotfiles" # Use a relative path, it's cleaner
 STOW_TARGET_DIR="$HOME"
 
