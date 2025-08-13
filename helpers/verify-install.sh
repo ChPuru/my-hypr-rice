@@ -26,8 +26,11 @@ else
 fi
 
 # --- Check Dotfiles ---
-if [[ -L "$HOME/.config/hypr/hyprland.conf" ]]; then
+# --- MODIFICATION START ---
+# We check if the DIRECTORY is a symlink, which is what stow creates.
+if [[ -L "$HOME/.config/hypr" ]]; then
     print_check "Hyprland config symlinked" "OK"
 else
     print_check "Hyprland config symlinked" "FAIL" "Config not found. Run the stow command from install.sh"
 fi
+# --- MODIFICATION END ---
