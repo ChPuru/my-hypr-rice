@@ -58,7 +58,6 @@ enable_multilib() {
 }
 
 install_pacman_packages() {
-    # Combine core and full packages into one stream for installation
     cat "$SCRIPT_DIR/packages/pacman-core.txt" "$SCRIPT_DIR/packages/pacman-full.txt" | sudo pacman -Syu --noconfirm --needed - 2>&1 | tee -a "$LOG_FILE"
     
     if [[ "$INSTALL_NVIDIA" == "true" ]]; then
@@ -76,8 +75,26 @@ install_aur_helper() {
     if ! command_exists paru; then
         print_info "AUR helper 'paru' not found. Installing..."
         sudo pacman -S --noconfirm --needed base-devel 2>&1 | tee -a "$LOG_FILE"
+        
+        # --- MODIFICATION START ---
+        # Retry git clone up to 3 times if it fails
+        local retries=3
+        while [ $retries -gt 0 ]; do
+            if git clone https://aur.archlinux.org/paru.git /tmp/paru; then
+                break
+            fi
+            retries=$((retries - 1))
+            print_warning "git clone failed. Retrying in 5 seconds... ($retries retries left)"
+            sleep 5
+        done
+
+        if [ $retries -eq 0 ]; then
+            print_error "Failed to clone paru repository after multiple attempts."
+            exit 1
+        fi
+        # --- MODIFICATION END ---
+
         (
-            git clone https://aur.archlinux.org/paru.git /tmp/paru
             cd /tmp/paru
             makepkg -si --noconfirm
         ) 2>&1 | tee -a "$LOG_FILE"
@@ -87,7 +104,10 @@ install_aur_helper() {
 }
 
 install_aur_packages() {
+    # --- MODIFICATION START ---
+    # Use the full path to the packages file
     paru -S --noconfirm --needed - < "$SCRIPT_DIR/packages/aur-packages.txt" 2>&1 | tee -a "$LOG_FILE"
+    # --- MODIFICATION END ---
 }
 
 setup_dotfiles() {
@@ -130,22 +150,15 @@ enable_services() {
 
 # --- Main Execution ---
 main() {
-    # Clear log file for a fresh run
     true > "$LOG_FILE"
-
     run_pre_install_checks
     ask_questions
 
     if ! gum confirm "Ready to start the installation? This will install packages and configure your system."; then
-        print_error "Installation aborted by user."
-        exit 0
+        print_error "Installation aborted by user."; exit 0;
     fi
 
-    # Validate sudo timestamp before starting
-    print_info "Authenticating sudo... Please enter your password if prompted."
     sudo -v
-
-    # --- Installation Steps ---
     print_info "--- Starting Installation ---"
 
     print_info "Step 1: Enabling multilib..."
@@ -161,8 +174,11 @@ main() {
     print_success "AUR helper installed."
 
     print_info "Step 4: Installing AUR packages..."
-    # Run paru as the real user
+    # --- MODIFICATION START ---
+    # Export the SCRIPT_DIR variable and the function itself to the subshell
+    export SCRIPT_DIR
     sudo -u "$REAL_USER" bash -c "$(declare -f install_aur_packages); install_aur_packages"
+    # --- MODIFICATION END ---
     print_success "AUR packages installed."
 
     print_info "Step 5: Stowing dotfiles..."
@@ -189,5 +205,4 @@ main() {
     fi
 }
 
-# Run main function
 main
