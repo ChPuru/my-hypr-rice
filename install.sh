@@ -7,15 +7,8 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 LOG_FILE="/tmp/hypr-rice-install.log"
 
-# Find the real user even when run with sudo - declare and assign separately
-REAL_USER=""
-if [[ -n "$SUDO_USER" ]]; then
-    REAL_USER="$SUDO_USER"
-else
-    REAL_USER=$(whoami)
-fi
-
-HOME_DIR=""
+# Find the real user even when run with sudo
+REAL_USER="${SUDO_USER:-$(whoami)}"
 HOME_DIR=$(getent passwd "$REAL_USER" | cut -d: -f6)
 
 # --- Exported variables for other functions ---
@@ -154,15 +147,13 @@ enable_services() {
 }
 
 # --- MODIFICATION START ---
-# Export all functions that will be called by 'gum spin'
-export -f enable_multilib
-export -f install_pacman_packages
-export -f install_aur_helper
-export -f install_aur_packages
-export -f setup_dotfiles
-export -f apply_initial_theme
-export -f setup_zsh
-export -f enable_services
+# This is the new "function router".
+# If the script is called with an argument, it will only run that function and then exit.
+if [[ -n "$1" ]]; then
+    # Call the function passed as the first argument
+    "$1"
+    exit 0
+fi
 # --- MODIFICATION END ---
 
 # --- Main Execution ---
@@ -183,15 +174,17 @@ main() {
     sudo -v
 
     # --- Installation Steps ---
-    gum spin --spinner dot --title "Enabling multilib..." -- bash -c "enable_multilib"
-    gum spin --spinner dot --title "Installing Pacman packages..." -- bash -c "install_pacman_packages"
-    gum spin --spinner dot --title "Installing AUR helper (paru)..." -- bash -c "install_aur_helper"
+    # We now call the script itself with the function name as an argument.
+    # $0 is a special variable that means "this script's name".
+    gum spin --spinner dot --title "Enabling multilib..." -- bash -c "$0 enable_multilib"
+    gum spin --spinner dot --title "Installing Pacman packages..." -- bash -c "$0 install_pacman_packages"
+    gum spin --spinner dot --title "Installing AUR helper (paru)..." -- bash -c "$0 install_aur_helper"
     # Run paru as the real user
-    gum spin --spinner dot --title "Installing AUR packages..." -- sudo -u "$REAL_USER" bash -c "install_aur_packages"
-    gum spin --spinner dot --title "Stowing dotfiles..." -- bash -c "setup_dotfiles"
-    gum spin --spinner dot --title "Applying initial theme..." -- bash -c "apply_initial_theme"
-    gum spin --spinner dot --title "Setting up Zsh..." -- bash -c "setup_zsh"
-    gum spin --spinner dot --title "Enabling systemd services..." -- bash -c "enable_services"
+    gum spin --spinner dot --title "Installing AUR packages..." -- sudo -u "$REAL_USER" bash -c "$0 install_aur_packages"
+    gum spin --spinner dot --title "Stowing dotfiles..." -- bash -c "$0 setup_dotfiles"
+    gum spin --spinner dot --title "Applying initial theme..." -- bash -c "$0 apply_initial_theme"
+    gum spin --spinner dot --title "Setting up Zsh..." -- bash -c "$0 setup_zsh"
+    gum spin --spinner dot --title "Enabling systemd services..." -- bash -c "$0 enable_services"
 
     print_success "Installation complete!"
     print_info "A log file is available at $LOG_FILE"
