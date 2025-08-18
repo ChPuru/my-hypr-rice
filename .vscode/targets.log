@@ -1,4 +1,6 @@
 make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.4.1
 # Built for Windows32
 # Copyright (C) 1988-2023 Free Software Foundation, Inc.
@@ -6,10 +8,12 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Aug 13 18:53:42 2025
+# Make data base, printed on Mon Aug 18 15:58:11 2025
 
 # Variables
 
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -33,20 +37,19 @@ PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\Wi
 # default
 MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
-@D = $(patsu 
-make: *** No rule to make target 'all'.  Stop.
-
-bst %/,%,$(patsubst %\,%,$(dir $@)))
+@D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_15212_IUDPUPSBLSPSGMAG
+EFC_19796_2283032206 = 1
+# environment
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_25448_SJQVUHZVRJHGGDTR
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
 # automatic
 %D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
-# environment
-EFC_14228_1262719628 = 1
 # automatic
 ^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
 # automatic
@@ -71,10 +74,10 @@ ONEDRIVE = C:\Users\Lenovo\OneDrive
 CURDIR := c:/Users/Lenovo/Desktop/my-hypr-rice
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 *D = $(patsubst %/,%,$(patsubst %\,%,$(dir $*)))
+# environment
+EFC_19796_3789132940 = 1
 # environment
 PROGRAMFILES = C:\Program Files (x86)
 # environment
@@ -86,13 +89,13 @@ COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # automatic
 +D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
 # environment
-EFC_14228_1592913036 = 1
+EFC_19796_1262719628 = 1
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 15212
+VSCODE_PID = 25448
 # environment
 CUDA_PATH = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0
 # automatic
@@ -126,7 +129,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin\x64;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\libnvvp;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Users\Lenovo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Tesseract-OCR;C:\Program Files\Git\cmd;C:\Program Files\Cloudflare\Cloudflare WARP\;C:\Users\Lenovo\AppData\Roaming\Python\Scripts;C:\Program Files\Docker\Docker\resources\bin;C:\Python311\Scripts\;C:\Python311;C:\Users\Lenovo\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\Lenovo\AppData\Local\Programs\Python\Python311\;C:\Python311\python.exe;C:\Program Files (x86)\Android\android-sdk\platform-tools\AdbWinApi.dll;C:\mingw64\bin;C:\mingw64\bin\gcc.exe;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\libnvvp;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin;C:\Program Files\NVIDIA Corporation\Nsight Compute 2025.3.0\;C:\Users\Lenovo\.cargo\bin;C:\Users\Lenovo\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\Lenovo\AppData\Local\Programs\Python\Python311\;C:\Users\Lenovo\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Lenovo\AppData\Local\Programs\Python\Python39\;C:\Users\Lenovo\AppData\Local\Microsoft\WindowsApps;C:\Users\Lenovo\AppData\Local\Microsoft\WinGet\Links;C:\Users\Lenovo\AppData\Roaming\npm;C:\Python313\python.exe;C:\Users\Lenovo\AppData\Local\Microsoft\WindowsApps\python.exe;C:\Users\Lenovo\AppData\Local\Programs\Python\Python39\python.exe;C:\Users\Lenovo\AppData\Roaming\Python\Scripts;C:\mingw64\bin;C:\Program Files (x86)\Android\android-sdk\platform-tools\AdbWinApi.dll;C:\Users\Lenovo\AppData\Local\Programs\Ollama;C:\Users\Lenovo\.dotnet\tools;C:\mingw64\bin\gcc.exe;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\libnvvp;
+PATH = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin\x64;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\libnvvp;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Users\Lenovo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Tesseract-OCR;C:\Program Files\Git\cmd;C:\Program Files\Cloudflare\Cloudflare WARP\;C:\Users\Lenovo\AppData\Roaming\Python\Scripts;C:\Program Files\Docker\Docker\resources\bin;C:\Python311\Scripts\;C:\Python311;C:\Users\Lenovo\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\Lenovo\AppData\Local\Programs\Python\Python311\;C:\Python311\python.exe;C:\Program Files (x86)\Android\android-sdk\platform-tools\AdbWinApi.dll;C:\mingw64\bin;C:\mingw64\bin\gcc.exe;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\libnvvp;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin;C:\Program Files\NVIDIA Corporation\Nsight Compute 2025.3.0\;C:\Users\Lenovo\.cargo\bin;C:\Users\Lenovo\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\Lenovo\AppData\Local\Programs\Python\Python311\;C:\Users\Lenovo\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Lenovo\AppData\Local\Programs\Python\Python39\;C:\Users\Lenovo\AppData\Local\Microsoft\WindowsApps;C:\Users\Lenovo\AppData\Local\Microsoft\WinGet\Links;C:\Users\Lenovo\AppData\Roaming\npm;C:\Python313\python.exe;C:\Users\Lenovo\AppData\Local\Microsoft\WindowsApps\python.exe;C:\Users\Lenovo\AppData\Local\Programs\Python\Python39\python.exe;C:\Users\Lenovo\AppData\Roaming\Python\Scripts;C:\mingw64\bin;C:\Program Files (x86)\Android\android-sdk\platform-tools\AdbWinApi.dll;C:\Users\Lenovo\AppData\Local\Programs\Ollama;C:\Users\Lenovo\.dotnet\tools;C:\mingw64\bin\gcc.exe;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\libnvvp;C:\Users\Lenovo\AppData\Local\Programs\cursor\resources\app\bin
 # environment
 ZES_ENABLE_SYSMAN = 1
 # environment
@@ -151,6 +154,8 @@ COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 PROGRAMW6432 = C:\Program Files
 # environment
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# environment
+EFC_19796_1592913036 = 1
 # automatic
 +F = $(notdir $+)
 # environment
@@ -161,8 +166,6 @@ USERDOMAIN = LAPTOP-OAVDDQKT
 GNUMAKEFLAGS := 
 # environment
 OS = Windows_NT
-# environment
-EFC_14228_3789132940 = 1
 # makefile
 .DEFAULT_GOAL := 
 # default
@@ -170,9 +173,9 @@ MAKE_VERSION := 4.4.1
 # environment
 PROGRAMFILES(X86) = C:\Program Files (x86)
 # environment
-EFC_14228_2283032206 = 1
-# environment
 USERDOMAIN_ROAMINGPROFILE = LAPTOP-OAVDDQKT
+# environment
+EFC_19796_2775293581 = 1
 # environment
 LEVEL_ZERO_V1_SDK_PATH = C:\Program Files\LevelZeroSDK\1.21.6\
 # environment
@@ -197,8 +200,6 @@ VSCODE_IPC_HOOK = \\.\pipe\bd59bc98-1.103.0-main-sock
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
-# environment
-EFC_14228_2775293581 = 1
 # default
 SUFFIXES := 
 # environment
@@ -218,7 +219,7 @@ CHOCOLATEYTOOLSLOCATION = C:\tools
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
 # variable set hash-table stats:
-# Load=102/1024=10%, Rehash=0, Collisions=11/129=9%
+# Load=103/1024=10%, Rehash=0, Collisions=12/130=9%
 
 # Pattern-specific Variable Values
 
@@ -226,9 +227,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/Lenovo/Desktop/my-hypr-rice, mtime 1755084863): 36 files, no impossibilities.
+# . (key c:/Users/Lenovo/Desktop/my-hypr-rice, mtime 1755109428): 38 files, no impossibilities.
 
-# 36 files, no impossibilities in 1 directories.
+# 38 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -265,12 +266,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 39 / storage = 358 B / avg = 9 B
-# current buf: size = 8174 B / used = 358 B / count = 39 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 41 / storage = 388 B / avg = 9 B
+# current buf: size = 8174 B / used = 388 B / count = 41 / avg = 9 B
 
-# strcache performance: lookups = 43 / hit rate = 9%
+# strcache performance: lookups = 45 / hit rate = 8%
 # hash-table stats:
-# Load=39/8192=0%, Rehash=0, Collisions=0/43=0%
-# Finished Make data base on Wed Aug 13 18:53:42 2025
+# Load=41/8192=1%, Rehash=0, Collisions=0/45=0%
+# Finished Make data base on Mon Aug 18 15:58:11 2025
 
  

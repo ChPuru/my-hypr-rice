@@ -65,53 +65,61 @@ cd "$DOTFILES_DIR"
 for dir in */; do
     if [[ -d "$dir" ]]; then
         package="${dir%/}"
-        # Ensure package is not empty and is not just "." or ".."
-        if [[ -n "${package:?}" && "$package" != "." && "$package" != ".." ]]; then
-            print_info "Unstowing $package (cleanup)..."
-            stow -D -t "$TARGET_HOME" "$package" 2>/dev/null || true
-            stow -D -t "$TARGET_CONFIG" "$package" 2>/dev/null || true
+        print_info "Unstowing $package (cleanup)..."
+        stow -D -t "$TARGET_HOME" "$package" 2>/dev/null || true
+        stow -D -t "$TARGET_CONFIG" "$package" 2>/dev/null || true
+    fi
+done
+
+# Determine which AGS config to use and verify it exists
+AGS_CONFIG=""
+if [[ -d "$DOTFILES_DIR/ags-advanced" ]] && find "$DOTFILES_DIR/ags-advanced" -type f | grep -q .; then
+    AGS_CONFIG="ags-advanced"
+    print_info "Using advanced AGS configuration"
+elif [[ -d "$DOTFILES_DIR/ags" ]] && find "$DOTFILES_DIR/ags" -type f | grep -q .; then
+    AGS_CONFIG="ags"
+    print_info "Using simple AGS configuration"
+else
+    print_warning "No AGS configuration found!"
+fi
+
+# Auto-detect packages that actually exist and have content
+print_info "Scanning for available packages..."
+CONFIG_PACKAGES=()
+for dir in "$DOTFILES_DIR"/*/; do
+    if [[ -d "$dir" ]]; then
+        package_name=$(basename "$dir")
+        
+        # Skip home packages
+        if [[ "$package_name" == "git" || "$package_name" == "zsh" ]]; then
+            continue
+        fi
+        
+        # Check if directory has actual content (not just empty dirs)
+        if find "$dir" -type f | grep -q .; then
+            CONFIG_PACKAGES+=("$package_name")
+            print_info "Found package: $package_name"
+        else
+            print_warning "Skipping empty package: $package_name"
         fi
     fi
 done
 
-# Determine which AGS config to use
-AGS_CONFIG="ags"
-if [[ -d "$DOTFILES_DIR/ags-advanced" && ! -d "$DOTFILES_DIR/ags" ]]; then
-    AGS_CONFIG="ags-advanced"
-    print_info "Using advanced AGS configuration"
-elif [[ -d "$DOTFILES_DIR/ags" ]]; then
-    print_info "Using simple AGS configuration"
-fi
-
-# --- Packages that go into ~/.config ---
-CONFIG_PACKAGES=(
-    "$AGS_CONFIG" alacritty anyrun auto-cpufreq avizo bash bottom btop cava
-    cool-retro-term dolphin dunst eww fastfetch fish fnott fontconfig foot
-    fuzzel gamemode gammastep gtk-3.0 gtk-4.0 helix htop hypr hyprlock
-    hyprnotify hyprpaper ironbar kanshi kitty kvantum lutris ly mako mangohud
-    mpv nemo neofetch nvim nwg-dock-hyprland nwg-look nwg-panel pipewire
-    qt5ct qt6ct ranger rofi starship swaybg swaylock swaylock-effects swaync
-    swww thunar tlp tmux tofi vis waybar wezterm wireplumber wlogout
-    wlsunset wluma wofi wpaperd yambar yazi zathura
-)
-
-# --- Packages that go into ~ (home directory) ---
-HOME_PACKAGES=(
-    git
-    zsh
-)
-
-print_info "Stowing config packages to $TARGET_CONFIG..."
-# Filter out packages that don't exist
-EXISTING_CONFIG_PACKAGES=()
-for pkg in "${CONFIG_PACKAGES[@]}"; do
-    if [[ -d "$DOTFILES_DIR/$pkg" ]]; then
-        EXISTING_CONFIG_PACKAGES+=("$pkg")
+# Auto-detect home packages
+print_info "Scanning for home packages..."
+HOME_PACKAGES=()
+for package in "git" "zsh"; do
+    if [[ -d "$DOTFILES_DIR/$package" ]] && find "$DOTFILES_DIR/$package" -type f | grep -q .; then
+        HOME_PACKAGES+=("$package")
+        print_info "Found home package: $package"
+    else
+        print_warning "Skipping missing/empty home package: $package"
     fi
 done
 
-if [[ ${#EXISTING_CONFIG_PACKAGES[@]} -gt 0 ]]; then
-    if stow_packages "$TARGET_CONFIG" "${EXISTING_CONFIG_PACKAGES[@]}"; then
+print_info "Stowing config packages to $TARGET_CONFIG..."
+if [[ ${#CONFIG_PACKAGES[@]} -gt 0 ]]; then
+    if stow_packages "$TARGET_CONFIG" "${CONFIG_PACKAGES[@]}"; then
         print_success "Config packages stowed successfully"
     else
         print_warning "Some config packages failed to stow, but continuing..."
@@ -121,16 +129,8 @@ else
 fi
 
 print_info "Stowing home packages to $TARGET_HOME..."
-# Filter out packages that don't exist
-EXISTING_HOME_PACKAGES=()
-for pkg in "${HOME_PACKAGES[@]}"; do
-    if [[ -d "$DOTFILES_DIR/$pkg" ]]; then
-        EXISTING_HOME_PACKAGES+=("$pkg")
-    fi
-done
-
-if [[ ${#EXISTING_HOME_PACKAGES[@]} -gt 0 ]]; then
-    if stow_packages "$TARGET_HOME" "${EXISTING_HOME_PACKAGES[@]}"; then
+if [[ ${#HOME_PACKAGES[@]} -gt 0 ]]; then
+    if stow_packages "$TARGET_HOME" "${HOME_PACKAGES[@]}"; then
         print_success "Home packages stowed successfully"
     else
         print_warning "Some home packages failed to stow, but continuing..."
@@ -155,7 +155,17 @@ print_success "Stow process completed!"
 
 # Verify critical symlinks
 print_info "Verifying critical symlinks..."
-CRITICAL_CONFIGS=("hypr" "kitty" "$AGS_CONFIG")
+CRITICAL_CONFIGS=()
+if [[ -n "$AGS_CONFIG" ]]; then
+    CRITICAL_CONFIGS+=("$AGS_CONFIG")
+fi
+
+# Add other critical configs that should exist
+for config in "hypr" "kitty" "nvim"; do
+    if [[ -d "$DOTFILES_DIR/$config" ]]; then
+        CRITICAL_CONFIGS+=("$config")
+    fi
+done
 
 for config in "${CRITICAL_CONFIGS[@]}"; do
     if [[ -L "$TARGET_CONFIG/$config" ]]; then
