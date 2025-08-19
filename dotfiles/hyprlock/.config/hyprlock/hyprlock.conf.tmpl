@@ -1,0 +1,72 @@
+# ----------------------------------------------------- 
+# Hyprlock Config - Inspired by Kakikori
+# ----------------------------------------------------- 
+# This is a template file.
+# Colors and assets are managed by theme.sh
+# ----------------------------------------------------- 
+
+background {
+    path = ##wallpaper##
+    blur_passes = 3
+    blur_size = 8
+}
+
+# --- General ---
+general {
+    disable_loading_bar = true
+    hide_cursor = true
+}
+
+# --- Profile Image ---
+image {
+    path = ##lockscreen_image##
+    size = 150
+    rounding = -1 # Full rounding
+    border_size = 4
+    border_color = rgba(##mauve##ff)
+    rotate = 0
+    reload_time = -1
+    position = 0, 120
+    halign = center
+    valign = top
+}
+
+# --- Input Field ---
+input-field {
+    size = 300, 50
+    outline_thickness = 3
+    dots_size = 0.2
+    dots_spacing = 0.6
+    outer_color = rgba(##mauve##ff)
+    inner_color = rgba(##surface1##ff)
+    font_color = rgba(##text##ff)
+    fade_on_empty = false
+    placeholder_text = <i>Password...</i>
+    hide_input = false
+    rounding = 15
+    position = 0, -80
+    halign = center
+    valign = center
+}
+
+# --- Clock ---
+label {
+    text = cmd[update:1000] echo "<b><big> $(date +"%H:%M") </big></b>"
+    color = rgba(##text##ff)
+    font_size = 80
+    font_family = ##font_main##
+    position = 0, 0
+    halign = center
+    valign = center
+}
+
+# --- Welcome Text ---
+label {
+    text = ##lockscreen_welcome_text##
+    color = rgba(##subtext1##ff)
+    font_size = 24
+    font_family = ##font_main##
+    position = 0, -150
+    halign = center
+    valign = center
+}

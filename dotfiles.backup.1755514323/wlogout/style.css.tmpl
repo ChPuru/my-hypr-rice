@@ -1,0 +1,67 @@
+/* ----------------------------------------------------- */
+/* wlogout Style                                         */
+/* ----------------------------------------------------- */
+/* This is a template file.                              */
+/* Colors and fonts are managed by theme.sh              */
+/* ----------------------------------------------------- */
+
+@define-color background      ###background##;
+@define-color foreground      ###foreground##;
+@define-color mantle          ###mantle##;
+@define-color red             ###red##;
+@define-color green           ###green##;
+@define-color yellow          ###yellow##;
+@define-color blue            ###blue##;
+@define-color magenta         ###magenta##;
+@define-color cyan            ###cyan##;
+
+* {
+	font-family: "##font_main##";
+    background-image: none;
+    transition: 200ms;
+}
+
+window {
+	background-color: rgba(##background##, 0.8);
+}
+
+button {
+    background-color: @mantle;
+    color: @foreground;
+    border: 2px solid @mantle;
+    border-radius: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%;
+}
+
+button:focus, button:active, button:hover {
+	background-color: @foreground;
+    color: @background;
+    outline-style: none;
+}
+
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
+    border-color: @blue;
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+    border-color: @red;
+}
+
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
+    border-color: @yellow;
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+    border-color: @green;
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+    border-color: @magenta;
+}

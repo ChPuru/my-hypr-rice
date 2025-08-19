@@ -1,0 +1,100 @@
+/* ----------------------------------------------------- */
+/* Waybar Style                                          */
+/* ----------------------------------------------------- */
+/* This is a template file.                              */
+/* Colors and fonts are managed by theme.sh              */
+/* ----------------------------------------------------- */
+
+/* --- Define Colors and Font --- */
+@define-color background      ###background##;
+@define-color foreground      ###foreground##;
+@define-color black           ###black##;
+@define-color gray            ###gray##;
+@define-color red             ###red##;
+@define-color green           ###green##;
+@define-color yellow          ###yellow##;
+@define-color blue            ###blue##;
+@define-color magenta         ###magenta##;
+@define-color cyan            ###cyan##;
+@define-color white           ###white##;
+@define-color mantle          ###mantle##;
+@define-color crust           ###crust##;
+@define-color mauve           ###mauve##;
+@define-color text            ###text##;
+
+/* --- General Styles --- */
+* {
+    border: none;
+    border-radius: 10px;
+    font-family: "##font_main##";
+    font-size: ##font_size##px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: @background;
+    color: @foreground;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+/* --- Module Styles --- */
+#workspaces,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#tray,
+#wlogout,
+#window {
+    background-color: @mantle;
+    padding: 5px 15px;
+    margin: 5px 5px;
+    color: @text;
+}
+
+#workspaces button {
+    color: @gray;
+    padding: 0 5px;
+}
+
+#workspaces button:hover {
+    background-color: @crust;
+    color: @text;
+}
+
+#workspaces button.focused {
+    color: @mauve;
+    background-color: @crust;
+}
+
+#workspaces button.urgent {
+    color: @red;
+}
+
+#clock {
+    background-color: @crust;
+    color: @blue;
+}
+
+#battery.charging, #battery.plugged {
+    color: @green;
+}
+
+#battery.critical:not(.charging) {
+    color: @red;
+}
+
+#pulseaudio.muted {
+    color: @red;
+}
+
+#network.disconnected {
+    color: @red;
+}
+
+#wlogout {
+    color: @red;
+}

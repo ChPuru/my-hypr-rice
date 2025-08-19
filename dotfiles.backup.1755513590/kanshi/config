@@ -1,0 +1,25 @@
+<!-- -----------------------------------------------------
+     Kanshi Config (Multi-monitor profiles)
+     -----------------------------------------------------
+     This is an EXAMPLE file. You MUST edit it with your own monitor names.
+     Find your monitor names by running `hyprctl monitors` in a terminal.
+     ----------------------------------------------------- -->
+
+# --- Profile 1: Laptop Only ---
+
+profile mobile {
+    # Replace eDP-1 with your laptop's monitor name
+    output eDP-1 enable
+    # Disable any external monitors
+    output DP-1 disable
+    output HDMI-A-1 disable
+}
+
+## --- Profile 2: Docked at Desk ---
+
+profile docked {
+    # Replace DP-1 with your main external monitor's name
+    output DP-1 enable
+    # Disable the laptop screen to save resources
+    output eDP-1 disable
+}

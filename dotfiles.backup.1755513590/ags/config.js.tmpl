@@ -1,0 +1,17 @@
+// ----------------------------------------------------- 
+// AGS Config
+// ----------------------------------------------------- 
+// This is a template file.
+// It is the main entry point for the AGS configuration.
+// ----------------------------------------------------- 
+
+import { app,-bar } from './modules/bar.js';
+import { dashboard } from './modules/dashboard.js';
+
+App.config({
+    style: './style.css',
+    windows: [
+        bar,
+        dashboard,
+    ],
+});

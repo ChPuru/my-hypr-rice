@@ -1,0 +1,66 @@
+/* ----------------------------------------------------- */
+/* Wofi Style                                            */
+/* ----------------------------------------------------- */
+/* This is a template file.                              */
+/* Colors and fonts are managed by theme.sh              */
+/* ----------------------------------------------------- */
+
+@define-color background      ###background##;
+@define-color foreground      ###foreground##;
+@define-color mantle          ###mantle##;
+@define-color crust           ###crust##;
+@define-color mauve           ###mauve##;
+@define-color blue            ###blue##;
+@define-color text            ###text##;
+
+* {
+    font-family: "##font_main##";
+    font-size: ##font_size##px;
+}
+
+window {
+    background-color: @background;
+    border-radius: 15px;
+    border: 2px solid @mauve;
+}
+
+#input {
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    color: @text;
+    background-color: @mantle;
+    border-radius: 10px;
+}
+
+#inner-box {
+    margin: 5px;
+    background-color: transparent;
+}
+
+#outer-box {
+    margin: 20px;
+    background-color: transparent;
+}
+
+#scroll {
+    margin-top: 10px;
+}
+
+#entry {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#entry:selected {
+    background-color: @crust;
+    color: @blue;
+}
+
+#text:selected {
+    color: @blue;
+}
+
+image {
+    margin-right: 10px;
+}

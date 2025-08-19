@@ -1,0 +1,69 @@
+/* ----------------------------------------------------- */
+/* AGS Style                                             */
+/* ----------------------------------------------------- */
+/* This is a template file.                              */
+/* Colors and fonts are managed by theme.sh              */
+/* ----------------------------------------------------- */
+
+@define-color background      ###background##;
+@define-color foreground      ###foreground##;
+@define-color mantle          ###mantle##;
+@define-color crust           ###crust##;
+@define-color mauve           ###mauve##;
+@define-color blue            ###blue##;
+@define-color red             ###red##;
+@define-color text            ###text##;
+
+.bar-container {
+    background-color: @background;
+    font-family: "##font_main##";
+    font-size: ##font_size##px;
+}
+
+.workspaces, .clock, .systray {
+    background-color: @mantle;
+    color: @text;
+    padding: 5px 15px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.workspaces button {
+    color: @foreground;
+    padding: 0 5px;
+}
+
+.workspaces button:hover {
+    color: @blue;
+}
+
+.workspaces button.focused {
+    color: @mauve;
+    background-color: @crust;
+    border-radius: 5px;
+}
+
+.dashboard-container {
+    background-color: rgba(27, 27, 38, 0.8);
+}
+
+.power-menu {
+    background-color: @crust;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid @mauve;
+}
+
+.power-menu button {
+    font-size: 24px;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: @mantle;
+    color: @text;
+}
+
+.power-menu button:hover {
+    background-color: @blue;
+    color: @crust;
+}

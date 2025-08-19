@@ -1,0 +1,44 @@
+# ----------------------------------------------------- 
+# Tmux Config
+# ----------------------------------------------------- 
+# This is a template file.
+# Colors and fonts are managed by theme.sh
+# ----------------------------------------------------- 
+
+# --- General ---
+set -g mouse on
+set -g history-limit 10000
+set -g default-terminal "tmux-256color"
+set-option -sa terminal-overrides ",xterm*:Tc"
+
+# --- Keybinds ---
+# Set prefix to Ctrl+a
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+
+# Split panes using | and -
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
+# Reload config
+bind r source-file ~/.config/tmux/tmux.conf \; display "Config Reloaded!"
+
+# --- Theming ---
+set -g status-position top
+set -g status-style "fg=##text##,bg=##mantle##"
+
+# Left side of status bar
+set -g status-left-length 40
+set -g status-left "#[fg=##crust##,bg=##blue##] #S #[fg=##blue##,bg=##mantle##]"
+
+# Window list
+setw -g window-status-style "fg=##text##,bg=##mantle##"
+setw -g window-status-current-style "fg=##crust##,bg=##mauve##"
+setw -g window-status-current-format "#[fg=##mantle##,bg=##mauve##] #I #W #[fg=##mauve##,bg=##mantle##]"
+setw -g window-status-format "#[fg=##text##] #I #W #[fg=##mantle##]"
+
+# Right side of status bar
+set -g status-right "#[fg=##surface2##,bg=##mantle##]#[fg=##text##,bg=##surface2##] %H:%M %d-%b-%y "

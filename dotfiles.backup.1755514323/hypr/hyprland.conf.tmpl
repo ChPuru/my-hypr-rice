@@ -1,0 +1,112 @@
+# ----------------------------------------------------- 
+# Hyprland Config
+# ----------------------------------------------------- 
+# This is a template file.
+# Colors and fonts are managed by theme.sh
+# ----------------------------------------------------- 
+
+# --- Plugins ---
+exec-once = hyprpm update && hyprpm enable burn-my-windows-git
+plugin = /usr/lib/hyprland/plugins/burn-my-windows.so
+
+# --- Source Other Configs ---
+source = ~/.config/hypr/env.conf
+source = ~/.config/hypr/keybinds.conf
+source = ~/.config/hypr/window-rules-gaming.conf
+
+# --- Monitors ---
+monitor=,preferred,auto,1
+
+# --- Autostart ---
+exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = ags
+exec-once = swww init
+exec-once = swaync
+exec-once = blueman-applet
+exec-once = gamemoded
+
+# --- Input ---
+input {
+    kb_layout = us
+    follow_mouse = 1
+    touchpad {
+        natural_scroll = yes
+    }
+    sensitivity = 0 
+}
+
+# --- General ---
+general {
+    gaps_in = 5
+    gaps_out = 15
+    border_size = 2
+    col.active_border = rgba(##mauve##ff) rgba(##sky##ff) 45deg
+    col.inactive_border = rgba(##surface2##aa)
+    layout = dwindle
+    allow_tearing = false
+}
+
+# --- Decoration ---
+decoration {
+    rounding = 10
+    
+    blur {
+        enabled = true
+        size = 3
+        passes = 1
+    }
+
+    drop_shadow = yes
+    shadow_range = 4
+    shadow_render_power = 3
+    col.shadow = rgba(##crust##e6)
+}
+
+# --- Animations ---
+animations {
+    enabled = yes
+    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+    animation = windows, 1, 7, myBezier
+    animation = windowsOut, 1, 7, default, popin 80%
+    animation = border, 1, 10, default
+    animation = borderangle, 1, 8, default
+    animation = fade, 1, 7, default
+    animation = workspaces, 1, 6, default
+}
+
+# --- Dwindle Layout ---
+dwindle {
+    pseudotile = yes
+    preserve_split = yes
+}
+
+# --- Master Layout ---
+master {
+    new_is_master = true
+}
+
+# --- Gestures ---
+gestures {
+    workspace_swipe = on
+}
+
+# --- Misc ---
+misc {
+    force_default_wallpaper = 0
+    disable_hyprland_logo = true
+    enable_swallow = true
+}
+
+# --- Plugin Configs ---
+plugin:burn-my-windows {
+    animation = incinerate
+}
+
+# --- Window Rules ---
+windowrulev2 = nomaximizerequest, class:.* 
+windowrulev2 = float, class:^(blueman-manager)$
+windowrulev2 = float, class:^(pavucontrol)$
+windowrulev2 = float, title:^(wlogout)$
+windowrulev2 = float, class:^(cava)$
+windowrulev2 = size 50% 50%, class:^(cava)$
+windowrulev2 = center, class:^(cava)$

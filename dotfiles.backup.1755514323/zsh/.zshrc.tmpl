@@ -1,0 +1,64 @@
+# ----------------------------------------------------- 
+# Zsh Config
+# ----------------------------------------------------- 
+# This is a template file.
+# Colors and fonts are managed by theme.sh
+# ----------------------------------------------------- 
+
+# --- Exports ---
+export EDITOR='nvim'
+export VISUAL='nvim'
+export ZSH="$HOME/.config/zsh"
+
+# --- Starship Prompt ---
+# This must be at the top to ensure the prompt is loaded correctly.
+eval "$(starship init zsh)"
+
+# --- Zoxide (smarter cd) ---
+# This allows you to jump to directories with 'z'
+eval "$(zoxide init zsh)"
+
+# --- fzf (fuzzy finder) ---
+# Load fzf keybindings and auto-completion
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+# --- Aliases ---
+# Use modern tools if they exist
+alias ls='eza --icons'
+alias la='eza -a --icons'
+alias ll='eza -l --icons'
+alias lla='eza -la --icons'
+alias cat='bat --style=plain'
+alias find='fzf'
+
+# System
+alias update='sudo pacman -Syu'
+alias cleanup='sudo pacman -Rns $(pacman -Qdtq)'
+
+# Git
+alias g='git'
+alias ga='git add'
+alias gc='git commit -m'
+alias gs='git status'
+alias gp='git push'
+alias gl='git pull'
+
+# --- Keybindings ---
+# These are standard readline keybindings
+bindkey -e
+
+# --- History ---
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+# --- Options ---
+setopt autocd              # Change dir without cd
+setopt globdots            # Include dotfiles in globbing
+setopt notify              # Report status of background jobs immediately
+setopt longlistjobs        # List jobs in long format

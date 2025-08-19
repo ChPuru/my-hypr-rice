@@ -1,0 +1,32 @@
+# ----------------------------------------------------- 
+# TLP Config
+# ----------------------------------------------------- 
+# Sane defaults for a modern laptop.
+# This file will be copied to /etc/tlp.conf
+# ----------------------------------------------------- 
+
+# Operation mode
+TLP_ENABLE=1
+
+# Set to 0 to disable TLP in battery mode
+TLP_DEFAULT_MODE=BAT
+
+# CPU performance scaling governor
+CPU_SCALING_GOVERNOR_ON_AC=performance
+CPU_SCALING_GOVERNOR_ON_BAT=powersave
+
+# CPU "turbo" boost
+CPU_BOOST_ON_AC=1
+CPU_BOOST_ON_BAT=0
+
+# Power-aware process scheduler for multi-core/hyper-threading CPUs
+SCHED_POWERSAVE_ON_AC=0
+SCHED_POWERSAVE_ON_BAT=1
+
+# WiFi power saving mode
+WIFI_PWR_ON_AC=off
+WIFI_PWR_ON_BAT=on
+
+# Audio power saving
+SOUND_POWER_SAVE_ON_AC=0
+SOUND_POWER_SAVE_ON_BAT=1

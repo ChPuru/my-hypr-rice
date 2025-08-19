@@ -1,0 +1,101 @@
+# ----------------------------------------------------- 
+# Starship Prompt Config
+# ----------------------------------------------------- 
+# This is a template file.
+# Colors and fonts are managed by theme.sh
+# ----------------------------------------------------- 
+
+format = """
+[](#mauve)\
+$os\
+$username\
+[](bg:#blue fg:#mauve)\
+$directory\
+[](bg:#green fg:#blue)\
+$git_branch\
+$git_status\
+[](bg:#yellow fg:#green)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+[](bg:#red fg:#yellow)\
+$docker_context\
+[](bg:#gray fg:#red)\
+$time\
+[](fg:#gray)\
+$line_break\
+$character"""
+
+[username]
+show_always = true
+style_user = "bg:#mauve fg:#crust"
+style_root = "bg:#mauve fg:#red"
+format = '[$user]($style)'
+
+[os]
+style = "bg:#mauve fg:#crust"
+disabled = false
+format = '[ $symbol ]($style)'
+
+[directory]
+style = "bg:#blue fg:#crust"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+style = "bg:#green fg:#crust"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:#green fg:#crust"
+format = '[$all_status$ahead_behind ]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:#yellow fg:#crust"
+format = '[ $symbol ($version) ]($style)'
+
+[c]
+symbol = ""
+style = "bg:#yellow fg:#crust"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#yellow fg:#crust"
+format = '[ $symbol ($version) ]($style)'
+
+[golang]
+symbol = ""
+style = "bg:#yellow fg:#crust"
+format = '[ $symbol ($version) ]($style)'
+
+[php]
+symbol = ""
+style = "bg:#yellow fg:#crust"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = ""
+style = "bg:#yellow fg:#crust"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:#red fg:#crust"
+format = '[ $symbol $context ]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:#gray"
+format = '[  $time ]($style)'
+
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[➜](bold red)'
