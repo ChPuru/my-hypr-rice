@@ -1,24 +1,27 @@
 * {
     border: none;
-    border-radius: 10px;
+    border-radius: 99px; /* A large value creates the pill shape */
     font-family: "JetBrainsMono Nerd Font";
     font-size: 11px;
     min-height: 0;
 }
+
 window#waybar {
-    background-color: #1e1e2e;
+    /* Make the bar itself transparent to see the wallpaper */
+    background-color: transparent;
     color: #cdd6f4;
 }
-#workspaces, #clock, #battery, #pulseaudio, #network, #cpu, #memory, #window, #tray {
-    background-color: #181825;
+
+#workspaces, #clock, #pulseaudio, #network, #cpu, #memory, #tray {
+    background-color: #1e1e2e; /* A solid background for the pills */
     padding: 5px 15px;
     margin: 5px 5px;
     color: #cdd6f4;
+    /* Add a subtle border to each pill */
+    border: 1px solid #313244;
 }
+
 #workspaces button.focused {
     color: #cba6f7;
     background-color: #313244;
-}
-#pulseaudio.muted {
-    color: #f38ba8;
 }
