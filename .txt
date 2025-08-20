@@ -1,0 +1,61 @@
+sudo pacman -Syu --noconfirm --needed hyprland kitty waybar wofi mako swww zsh starship nano git noto-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd
+
+
+sudo pacman -S --noconfirm --needed catppuccin-gtk-theme-mocha papirus-icon-theme
+
+
+my-manual-rice/
+└── .config/
+    ├── hypr/
+    │   ├── hyprland.conf
+    │   ├── keybinds.conf
+    │   └── windowrules.conf
+    ├── kitty/
+    │   └── kitty.conf
+    ├── waybar/
+    │   ├── config
+    │   └── style.css
+    ├── wofi/
+    │   └── style.css
+    ├── mako/
+    │   └── config
+    ├── gtk-3.0/
+    │   └── settings.ini
+    ├── starship.toml           (NEW)
+    ├── fastfetch/              (NEW)
+    │   └── config.jsonc        (NEW)
+    └── yazi/                   (NEW)
+        └── theme.toml          (NEW)
+└── .zshrc                      (NEW)
+
+
+sudo pacman -Syu --noconfirm --needed hyprland kitty waybar wofi mako swww nano git noto-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd catppuccin-gtk-theme-mocha papirus-icon-theme
+
+
+download wallpaper
+mkdir -p ~/Pictures/wallpapers
+wget -O ~/Pictures/wallpapers/catppuccin.png https://raw.githubusercontent.com/catppuccin/wallpapers/main/landscapes/evening-sky.png
+
+add to hyprland.conf exec once
+exec-once = swww img ~/Pictures/wallpapers/catppuccin.png
+
+sudo pacman -S --noconfirm --needed zsh starship fastfetch yazi eza bat fzf zoxide
+
+chsh -s /bin/zsh
+
+
+sudo pacman -S --noconfirm --needed base-devel
+git clone https://aur.archlinux.org/paru.git /tmp/paru
+(cd /tmp/paru && makepkg -si --noconfirm)
+
+paru -S --noconfirm --needed hyprlock wlogout burn-my-windows-git
+
+sudo pacman -Syu --noconfirm --needed steam lutris gamemode mangohud neovim firefox wine-staging gamescope
+
+
+sudo pacman -Syu --noconfirm --needed hyprland kitty waybar wofi mako swww nano git noto-fonts noto-fonts-emoji ttf-jetbrains-mono-nerd catppuccin-gtk-theme-mocha papirus-icon-theme thunar blueman pavucontrol
+
+sudo pacman -S --noconfirm --needed zsh starship fastfetch yazi eza bat fzf zoxide
+
+sudo pacman -S --noconfirm --needed base-devel && git clone https://aur.archlinux.org/paru.git /tmp/paru && (cd /tmp/paru && makepkg -si --noconfirm)
+paru -S --noconfirm --needed hyprlock wlogout burn-my-windows-git grim slurp

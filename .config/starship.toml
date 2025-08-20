@@ -1,0 +1,42 @@
+format = """
+[](fg:#cba6f7)\
+$os\
+$username\
+[](bg:#89b4fa fg:#cba6f7)\
+$directory\
+[](bg:#a6e3a1 fg:#89b4fa)\
+$git_branch\
+$git_status\
+[](fg:#a6e3a1)\
+$line_break\
+$character"""
+
+[username]
+show_always = true
+style_user = "bg:#cba6f7 fg:#1e1e2e"
+style_root = "bg:#cba6f7 fg:#f38ba8"
+format = '[$user]($style)'
+
+[os]
+style = "bg:#cba6f7 fg:#1e1e2e"
+disabled = false
+format = '[ $symbol ]($style)'
+
+[directory]
+style = "bg:#89b4fa fg:#1e1e2e"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+style = "bg:#a6e3a1 fg:#1e1e2e"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:#a6e3a1 fg:#1e1e2e"
+format = '[$all_status$ahead_behind ]($style)'
+
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[➜](bold red)'

@@ -1,0 +1,22 @@
+/* Catppuccin Mocha theme for Firefox UI */
+:root {
+  --main-color: #cba6f7; /* Mauve */
+  --bg-color: #1e1e2e;
+  --fg-color: #cdd6f4;
+  --toolbar-bg: #181825;
+  --url-bg: #313244;
+}
+#main-window, #navigator-toolbox {
+  background-color: var(--toolbar-bg) !important;
+  color: var(--fg-color) !important;
+}
+#urlbar-background {
+  background-color: var(--url-bg) !important;
+}
+.tab-background[selected="true"] {
+  background-color: var(--main-color) !important;
+}
+.tab-label[selected="true"] {
+  color: var(--bg-color) !important;
+  font-weight: bold;
+}

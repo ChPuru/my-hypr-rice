@@ -1,0 +1,24 @@
+* {
+    border: none;
+    border-radius: 10px;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 11px;
+    min-height: 0;
+}
+window#waybar {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+}
+#workspaces, #clock, #battery, #pulseaudio, #network, #cpu, #memory, #window, #tray {
+    background-color: #181825;
+    padding: 5px 15px;
+    margin: 5px 5px;
+    color: #cdd6f4;
+}
+#workspaces button.focused {
+    color: #cba6f7;
+    background-color: #313244;
+}
+#pulseaudio.muted {
+    color: #f38ba8;
+}

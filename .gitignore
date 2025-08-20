@@ -1,0 +1,16 @@
+# System files
+*.log
+.cache/
+.DS_Store
+
+# Editor-specific files
+.vscode/
+*.swp
+
+# User-specific files that should not be tracked
+# For example, a local wallpaper or a custom theme file
+/Pictures/
+/themes/my-custom-theme.json
+
+# Neovim lazy.nvim directory
+.config/nvim/lazy/
