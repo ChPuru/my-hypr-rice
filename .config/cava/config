@@ -1,0 +1,61 @@
+# CAVA Configuration File
+# This is not a shell script - it's an INI-style config file
+
+[general]
+# Enable or disable the visualizer
+enable = 1
+
+# Audio input method
+interface = alsa
+
+# Audio device (use 'pactl list short sinks' to find your device)
+device = hw:0,0
+
+# Audio capture rate
+capture_rate = 44100
+
+# Number of audio channels
+channels = 2
+
+# Audio mode: 0 = average, 1 = left, 2 = right, 3 = difference
+audio_mode = 0
+
+# Visualizer settings
+bars = 20
+bar_width = 10
+bar_spacing = 2
+bar_height = 30
+
+# Color gradient for the bars
+# You can create a gradient by defining multiple bar_color values
+bar_color = '#7e89b6'
+bar_color2 = '#6c76a4'
+bar_color3 = '#5a6492'
+bar_color4 = '#485180'
+bar_color5 = '#363f6e'
+bar_color6 = '#242d5c'
+bar_color7 = '#121b4a'
+bar_color8 = '#000938'
+bar_color9 = '#000026'
+bar_color10 = '#000014'
+bar_color11 = '#000002'
+bar_color12 = '#000002'
+bar_color13 = '#000002'
+bar_color14 = '#000002'
+bar_color15 = '#000002'
+bar_color16 = '#000002'
+bar_color17 = '#000002'
+bar_color18 = '#000002'
+bar_color19 = '#000002'
+bar_color20 = '#000002'
+
+[output]
+# Output method: 'ncurses' for terminal, 'noncurses' for raw output, 'raw' for custom
+method = raw
+
+# Output format: 'binary' for raw values, 'text' for ASCII
+format = text
+
+[visualizer]
+# Visualizer type: 'bar', 'circle', 'wave', or 'ellipse'
+visualizer = bar
