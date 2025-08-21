@@ -1,0 +1,82 @@
+/* Catppuccin Mocha Theme */
+.bar-container {
+    background-color: transparent;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
+}
+
+.workspaces, .clock, .systray {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    padding: 4px 12px;
+    margin: 6px;
+    border-radius: 99px; /* Pill shape */
+    border: 1px solid #313244;
+}
+
+.workspaces button {
+    color: #a6adc8;
+    padding: 0 6px;
+}
+
+.workspaces button:hover {
+    color: #cdd6f4;
+}
+
+.workspaces button.focused {
+    color: #cba6f7;
+    background-color: #313244;
+    border-radius: 99px;
+}
+
+.dashboard-container {
+    background-color: rgba(30, 30, 46, 0.7);
+}
+.dashboard-box {
+    background-color: #1e1e2e;
+    padding: 2rem;
+    margin: 4rem;
+    border-radius: 1.5rem;
+    border: 1px solid #313244;
+}
+.dashboard-card {
+    background-color: #181825;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 1rem;
+}
+.card-title { font-weight: bold; }
+.power-menu button { font-size: 1.5rem; padding: 0.5rem; margin: 0 0.5rem; }
+.power-menu button:hover { background-color: #f38ba8; color: #1e1e2e; }
+
+.cc-container {
+    background-color: #1e1e2e;
+    border-left: 1px solid #313244;
+    padding: 1rem;
+}
+.slider-box {
+    background-color: #181825;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 1rem;
+}
+
+.launcher-container {
+    background-color: #1e1e2e;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid #313244;
+}
+.launcher-container entry {
+    background-color: #313244;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+.launcher-container button {
+    padding: 0.5rem;
+}
+.launcher-container button:hover {
+    background-color: #313244;
+    border-radius: 0.5rem;
+}

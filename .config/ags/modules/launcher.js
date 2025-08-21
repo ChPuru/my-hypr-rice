@@ -1,49 +1,34 @@
 const AppItem = app => Widget.Button({
-    on_clicked: () => {
-        App.closeWindow('launcher');
-        app.launch();
-    },
+    on_clicked: () => { App.closeWindow('launcher'); app.launch(); },
     child: Widget.Box({
         children: [
-            Widget.Icon({
-                icon: app.icon_name || "",
-                size: 42,
-            }),
-            Widget.Label({
-                label: app.name,
-                xalign: 0,
-                vpack: 'center',
-            }),
+            Widget.Icon({ icon: app.icon_name || "", size: 42 }),
+            Widget.Label({ label: app.name, xalign: 0, vpack: 'center' }),
         ],
     }),
 });
 
-export const Launcher = () => {
-    const list = Widget.Box({
+export const launcher = Widget.Window({
+    name: 'launcher',
+    visible: false,
+    keymode: 'exclusive',
+    child: Widget.Box({
+        class_name: 'launcher-container',
         vertical: true,
-        children: Applications.query("").map(AppItem),
-    });
-
-    const entry = Widget.Entry({
-        on_change: ({ text }) => {
-            list.children = Applications.query(text || "").map(AppItem);
-        },
-    });
-
-    return Widget.Window({
-        name: 'launcher',
-        popup: true,
-        child: Widget.Box({
-            class_name: 'launcher-container',
-            vertical: true,
-            children: [
-                entry,
-                Widget.Scrollable({
-                    hscroll: 'never',
-                    child: list,
+        children: [
+            Widget.Entry({
+                on_change: ({ text }) => {
+                    const list = App.query(text || "").map(AppItem);
+                    scrolled_list.child.children = list;
+                },
+            }),
+            Widget.Scrollable({
+                hscroll: 'never',
+                child: Widget.Box({
+                    vertical: true,
+                    children: App.query("").map(AppItem),
                 }),
-            ],
-        }),
-        setup: self => self.keybind("Escape", () => App.closeWindow('launcher')),
-    });
-};
+            }),
+        ],
+    }),
+});
