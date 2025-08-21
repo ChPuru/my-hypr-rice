@@ -1,8 +1,100 @@
 {
-    "layer": "top",
-    "position": "top",
-    "height": 40,
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right": ["tray", "pulseaudio", "network", "cpu", "memory", "battery"]
+  "layer": "top",
+  "position": "top",
+  "height": 34,
+  "spacing": 6,
+  "modules-left": ["custom/launcher", "hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "battery", "tray", "custom/power"],
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "10": "",
+      "urgent": "",
+      "active": "",
+      "default": ""
+    }
+  },
+  "clock": {
+    "format": " {:%H:%M}",
+    "tooltip-format": "<tt>{calendar}</tt>"
+  },
+  "cpu": {
+    "format": " {usage}%",
+    "interval": 2
+  },
+  "memory": {
+    "format": " {}%",
+    "interval": 2
+  },
+  "temperature": {
+    "format": " {temperatureC}°C",
+    "critical-threshold": 80,
+    "format-critical": " {temperatureC}°C"
+  },
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "states": {
+      "warning": 30,
+      "critical": 15
+    }
+  },
+  "network": {
+    "format-wifi": " {essid}",
+    "format-ethernet": " {ipaddr}",
+    "format-disconnected": " Disconnected",
+    "format-alt": " {bandwidthDownBytes}   {bandwidthUpBytes} "
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": " Muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-right": "pavucontrol"
+  },
+  "tray": {
+    "spacing": 10,
+    "icon-size": 16
+  },
+  "custom/launcher": {
+    "format": "",
+    "on-click": "rofi -show drun -theme ~/.config/rofi/launcher.rasi",
+    "on-click-right": "rofi -show run -theme ~/.config/rofi/launcher.rasi",
+    "tooltip": false
+  },
+  "custom/power": {
+    "format": "⏻",
+    "on-click": "wlogout",
+    "tooltip": false
+  },
+  "custom/workspace-indicator": {
+  "exec": "~/.config/hypr/scripts/workspace-indicator.sh",
+  "interval": 1,
+  "format": "{}",
+  "tooltip": false
+},
+"custom/timezone": {
+  "exec": "~/.config/hypr/scripts/timezone-switcher.sh",
+  "return-type": "json",
+  "interval": 30,
+  "on-click": "~/.config/hypr/scripts/timezone-switcher.sh toggle",
+  "on-scroll-up": "~/.config/hypr/scripts/timezone-switcher.sh next",
+  "on-scroll-down": "~/.config/hypr/scripts/timezone-switcher.sh prev"
+}
 }

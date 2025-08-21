@@ -1,0 +1,87 @@
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry
+              :width "100%"
+              :height "34px"
+              :x "0"
+              :y "0")
+  :stacking "bottom"
+  (bar))
+
+(defwidget bar []
+  (centerbox
+    :orientation "horizontal"
+    (start_widgets)
+    (center_widgets)
+    (end_widgets)))
+
+(defwidget start_widgets []
+  (box
+    :orientation "horizontal"
+    :spacing 10
+    (workspaces)
+    (window_title)))
+
+(defwidget center_widgets []
+  (clock))
+
+(defwidget end_widgets []
+  (box
+    :orientation "horizontal"
+    :spacing 10
+    (cpu)
+    (memory)
+    (temperature)
+    (battery)
+    (volume)
+    (network)
+    (power_menu)))
+
+(defwidget workspaces []
+  (box
+    :class "workspaces"
+    :orientation "horizontal"
+    (for workspace in (range 1 11)
+      (button
+        :onclick (hyprctl dispatch workspace ${workspace})
+        (label :text {workspace})))))
+
+(defwidget window_title []
+  (label :text {hyprland.active_window} :class "window-title"))
+
+(defwidget clock []
+  (label :text {TIME} :class "clock"))
+
+(defwidget cpu []
+  (label :text {CPU} :class "cpu"))
+
+(defwidget memory []
+  (label :text {MEM} :class "memory"))
+
+(defwidget temperature []
+  (label :text {TEMP} :class "temperature"))
+
+(defwidget battery []
+  (label :text {BAT} :class "battery"))
+
+(defwidget volume []
+  (button
+    :onclick (pactl set-sink-mute @DEFAULT_SINK@ toggle)
+    (label :text {VOL} :class "volume")))
+
+(defwidget network []
+  (label :text {NET} :class "network"))
+
+(defwidget power_menu []
+  (button
+    :onclick (wlogout)
+    (label :text "⏻" :class "power")))
+
+(defpoll TIME :interval "1s" `date +"%H:%M"`)
+(defpoll CPU :interval "5s" `~/.config/eww/scripts/cpu.sh`)
+(defpoll MEM :interval "5s" `~/.config/eww/scripts/memory.sh`)
+(defpoll TEMP :interval "5s" `~/.config/eww/scripts/temperature.sh`)
+(defpoll BAT :interval "10s" `~/.config/eww/scripts/battery.sh`)
+(defpoll VOL :interval "1s" `~/.config/eww/scripts/volume.sh`)
+(defpoll NET :interval "5s" `~/.config/eww/scripts/network.sh`)

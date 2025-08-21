@@ -1,0 +1,15 @@
+{
+  "timezone": {
+    "format": "{}",
+    "format-alt": "{}",
+    "tooltip-format": "<tt>{}</tt>",
+    "timezones": [
+      "UTC",
+      "America/New_York",
+      "Asia/Kolkata"
+    ],
+    "on-click": "toggle-timezones",
+    "on-scroll-up": "switch-timezone-up",
+    "on-scroll-down": "switch-timezone-down"
+  }
+}

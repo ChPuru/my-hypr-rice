@@ -1,27 +1,167 @@
 * {
     border: none;
-    border-radius: 99px; /* A large value creates the pill shape */
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 11px;
+    border-radius: 0;
+    font-family: "FiraCode Nerd Font", "Iosevka Nerd Font", sans-serif;
+    font-size: 14px;
     min-height: 0;
 }
 
 window#waybar {
-    /* Make the bar itself transparent to see the wallpaper */
-    background-color: transparent;
+    background: rgba(30, 30, 46, 0.7);
+    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
     color: #cdd6f4;
 }
 
-#workspaces, #clock, #pulseaudio, #network, #cpu, #memory, #tray {
-    background-color: #1e1e2e; /* A solid background for the pills */
-    padding: 5px 15px;
-    margin: 5px 5px;
-    color: #cdd6f4;
-    /* Add a subtle border to each pill */
-    border: 1px solid #313244;
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+    color: #6c7086;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button:hover {
+    background: rgba(108, 112, 134, 0.2);
+    box-shadow: inherit;
 }
 
 #workspaces button.focused {
-    color: #cba6f7;
+    background: #313244;
+    color: #cdd6f4;
+    border-bottom: 3px solid #cba6f7;
+}
+
+#workspaces button.urgent {
+    background-color: #f38ba8;
+    color: #1e1e2e;
+}
+
+#clock, #battery, #cpu, #memory, #temperature, #network, #pulseaudio, #tray, #custom-launcher, #custom-power {
+    padding: 0 10px;
+    margin: 0 5px;
+    color: #cdd6f4;
+}
+
+#clock {
     background-color: #313244;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+#cpu {
+    background-color: #94e2d5;
+    color: #1e1e2e;
+    border-radius: 10px;
+}
+
+#memory {
+    background-color: #74c7ec;
+    color: #1e1e2e;
+    border-radius: 10px;
+}
+
+#temperature {
+    background-color: #fab387;
+    color: #1e1e2e;
+    border-radius: 10px;
+}
+
+#temperature.critical {
+    background-color: #f38ba8;
+}
+
+#battery {
+    background-color: #a6e3a1;
+    color: #1e1e2e;
+    border-radius: 10px;
+}
+
+#battery.charging {
+    background-color: #a6e3a1;
+    color: #1e1e2e;
+}
+
+#battery.warning:not(.charging) {
+    background-color: #f9e2af;
+    color: #1e1e2e;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f38ba8;
+    color: #1e1e2e;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#network {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+    border-radius: 10px;
+}
+
+#network.disconnected {
+    background-color: #f38ba8;
+}
+
+#pulseaudio {
+    background-color: #cba6f7;
+    color: #1e1e2e;
+    border-radius: 10px;
+}
+
+#pulseaudio.muted {
+    background-color: #6c7086;
+    color: #cdd6f4;
+}
+
+#tray {
+    background-color: #313244;
+    border-radius: 10px;
+}
+
+#custom-launcher {
+    background-color: #f5c2e7;
+    color: #1e1e2e;
+    border-radius: 10px;
+    padding: 0 12px;
+    margin-left: 10px;
+}
+
+#custom-power {
+    background-color: #f38ba8;
+    color: #1e1e2e;
+    border-radius: 10px;
+    padding: 0 12px;
+    margin-right: 10px;
+}
+
+@keyframes blink {
+    to {
+        background-color: #f38ba8;
+        color: #1e1e2e;
+    }
+}
+
+#clock {
+  background: linear-gradient(135deg, #89b4fa, #74c7ec);
+  border-radius: 10px;
+  padding: 0 12px;
+  margin: 0 5px;
+  color: #1e1e2e;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#clock.timezone {
+  background: linear-gradient(135deg, #cba6f7, #f5c2e7);
+}
+
+#clock:hover {
+  background: linear-gradient(135deg, #74c7ec, #89b4fa);
+}
+
+#clock.timezone:hover {
+  background: linear-gradient(135deg, #f5c2e7, #cba6f7);
 }
