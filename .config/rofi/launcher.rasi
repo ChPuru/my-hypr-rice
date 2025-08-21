@@ -1,5 +1,5 @@
 /**
- * Rofi Configuration (Inspired by prasanthrangan/hyprdots)
+ * Rofi Configuration - Fixed Version
  */
 
 configuration {
@@ -23,13 +23,12 @@ configuration {
   fg-col2: #f5c2e7;
   grey: #6c7086;
   width: 55%;
-  font: "Iosevka Nerd Font 14";
 }
 
 window {
   transparency: "real";
   background-color: @bg-col;
-  text-color: @fg-col;
+  color: @fg-col;
   border: 2px;
   border-color: @border-col;
   border-radius: 10px;
@@ -46,20 +45,20 @@ mainbox {
 inputbar {
   children: [prompt, entry];
   background-color: @bg-col;
-  text-color: @fg-col;
+  color: @fg-col;
   padding: 15px;
 }
 
 prompt {
   background-color: @blue;
-  text-color: @bg-col;
+  color: @bg-col;
   padding: 10px;
   border-radius: 5px;
 }
 
 entry {
   background-color: @bg-col;
-  text-color: @fg-col;
+  color: @fg-col;
   placeholder: "Search...";
   placeholder-color: @grey;
 }
@@ -75,20 +74,20 @@ listview {
 
 element {
   background-color: @bg-col;
-  text-color: @fg-col;
+  color: @fg-col;
   padding: 8px;
 }
 
 element selected {
   background-color: @selected-col;
-  text-color: @fg-col2;
+  color: @fg-col2;
   border: 1px solid @border-col;
   border-radius: 5px;
 }
 
 element-text {
   background-color: inherit;
-  text-color: inherit;
+  color: inherit;
 }
 
 element-icon {
@@ -98,21 +97,21 @@ element-icon {
 
 message {
   background-color: @bg-col;
-  text-color: @fg-col;
+  color: @fg-col;
   padding: 5px;
   border: 0;
 }
 
 textbox {
   background-color: @bg-col;
-  text-color: @fg-col;
+  color: @fg-col;
 }
 
 error-message {
   background-color: @bg-col;
-  text-color: @f38ba8;
+  color: #f38ba8;
   padding: 5px;
   border: 2px;
-  border-color: @f38ba8;
+  border-color: #f38ba8;
   border-radius: 5px;
 }
