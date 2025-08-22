@@ -1,41 +1,88 @@
-* {
-    font-family: "JetBrainsMono Nerd Font";
-    background-image: none;
-    transition: 200ms;
-}
+/* ----------- 💫 https://github.com/JaKooLit 💫 -------- */
+/* wallust-wlogout */
+
+/* Importing wallust colors */
+@import '../../.config/waybar/wallust/colors-waybar.css';
+
 window {
+    font-size: 24pt;
+    color: @foreground; /* text */
     background-color: rgba(30, 30, 46, 0.8);
 }
+
 button {
-    background-color: #181825;
-    color: #cdd6f4;
-    border: 2px solid #181825;
-    border-radius: 15px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 35%;
+    background-size: 20%;
+    background-color: rgba(200, 220, 255, 0);
+    animation: gradient_f 10s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    border-radius: 80px;
+	border:0px;
+	outline-style: none;
 }
-button:focus, button:active, button:hover {
-    background-color: #cdd6f4;
-    color: #1e1e2e;
+
+button:focus {
+    background-size: 50%;
+	border: 0px;
+	outline-style: none;
+
 }
+
+button:hover {
+    background-color: transparent; 
+    color: @color13;
+    background-size: 50%;
+    margin: 30px;
+    border-radius: 80px;
+    outline-style: none;
+	
+}
+
+/* Adjust the size of the icon or content inside the button */
+button span {
+    font-size: 1.2em; /* Increase the font size */
+}
+
+
 #lock {
-    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
-    border-color: #89b4fa;
+    background-image: image(url("./icons/lock.png"));
 }
+#lock:hover {
+    background-image: image(url("./icons/lock-hover.png"));
+}
+
 #logout {
-    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
-    border-color: #f38ba8;
+    background-image: image(url("./icons/logout.png"));
 }
+#logout:hover {
+    background-image: image(url("./icons/logout-hover.png"));
+}
+
 #suspend {
-    background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
-    border-color: #f9e2af;
+    background-image: image(url("./icons/sleep.png"));
 }
-#reboot {
-    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
-    border-color: #a6e3a1;
+#suspend:hover {
+    background-image: image(url("./icons/sleep-hover.png"));
 }
+
 #shutdown {
-    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
-    border-color: #f5c2e7;
+    background-image: image(url("./icons/power.png"));
+}
+#shutdown:hover {
+    background-image: image(url("./icons/power-hover.png"));
+}
+
+#reboot {
+    background-image: image(url("./icons/restart.png"));
+}
+#reboot:hover {
+    background-image: image(url("./icons/restart-hover.png"));
+}
+
+#hibernate {
+    background-image: image(url("./icons/hibernate.png"));
+}
+#hibernate:hover {
+    background-image: image(url("./icons/hibernate-hover.png"));
 }
