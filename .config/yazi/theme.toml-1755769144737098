@@ -1,0 +1,13 @@
+[manager]
+cwd = { fg = "#89b4fa", bold = true }
+border_fg = "#45475a"
+hovered_fg = "#cba6f7"
+hovered_bg = "#313244"
+selected_fg = "#a6e3a1"
+selected_bg = "#45475a"
+
+[status]
+separator_fg = "#45475a"
+border_fg = "#45475a"
+title_fg = "#89b4fa"
+info_fg = "#cdd6f4"

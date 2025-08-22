@@ -1,6 +1,4 @@
 /* ~/.config/waybar/style.css */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
-
 * {
     border: none;
     border-radius: 0;
@@ -13,7 +11,7 @@
 
 window#waybar {
     background: rgba(30, 30, 46, 0.85);
-    backdrop-filter: blur(20px);
+    background-color: rgba(30, 30, 46, 0.6);
     border-radius: 16px;
     border: 1px solid rgba(203, 166, 247, 0.3);
     box-shadow: 
@@ -46,14 +44,12 @@ window#waybar {
 #workspaces button:hover {
     background: rgba(203, 166, 247, 0.2);
     color: #cdd6f4;
-    transform: scale(1.05);
 }
 
 #workspaces button.active {
     background: linear-gradient(135deg, #cba6f7, #f38ba8);
     color: #1e1e2e;
     font-weight: 600;
-    transform: scale(1.1);
     box-shadow: 0 4px 16px rgba(203, 166, 247, 0.4);
 }
 
@@ -61,11 +57,6 @@ window#waybar {
     background: linear-gradient(135deg, #f38ba8, #eba0ac);
     color: #1e1e2e;
     animation: urgent-pulse 1s ease-in-out infinite;
-}
-
-@keyframes urgent-pulse {
-    0%, 100% { transform: scale(1.0); }
-    50% { transform: scale(1.1); }
 }
 
 /* Window title */
@@ -89,7 +80,6 @@ window#waybar {
 }
 
 #clock:hover {
-    transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(137, 180, 250, 0.4);
 }
 
@@ -122,11 +112,6 @@ window#waybar {
     animation: critical-temp 0.5s ease-in-out infinite;
 }
 
-@keyframes critical-temp {
-    0%, 100% { transform: scale(1.0); }
-    50% { transform: scale(1.05); }
-}
-
 #battery {
     background: linear-gradient(135deg, #a6e3a1, #74c7ec);
     color: #1e1e2e;
@@ -135,11 +120,6 @@ window#waybar {
 #battery.charging {
     background: linear-gradient(135deg, #a6e3a1, #f9e2af);
     animation: charging-pulse 2s ease-in-out infinite;
-}
-
-@keyframes charging-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
 }
 
 #battery.warning:not(.charging) {
@@ -151,11 +131,6 @@ window#waybar {
     background: linear-gradient(135deg, #f38ba8, #eba0ac);
     color: #1e1e2e;
     animation: critical-battery 0.5s ease-in-out infinite;
-}
-
-@keyframes critical-battery {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
 }
 
 #network {
@@ -188,10 +163,6 @@ window#waybar {
     font-weight: 700;
 }
 
-#custom-launcher:hover {
-    transform: rotate(90deg) scale(1.1);
-}
-
 #custom-power {
     background: linear-gradient(135deg, #f38ba8, #eba0ac);
     color: #1e1e2e;
@@ -202,11 +173,6 @@ window#waybar {
 
 #custom-power:hover {
     animation: power-glow 0.5s ease-in-out;
-}
-
-@keyframes power-glow {
-    0%, 100% { box-shadow: 0 0 5px rgba(243, 139, 168, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(243, 139, 168, 0.8); }
 }
 
 #custom-notification {
@@ -259,7 +225,6 @@ window#waybar {
 #custom-launcher:hover,
 #custom-power:hover,
 #custom-notification:hover {
-    transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
