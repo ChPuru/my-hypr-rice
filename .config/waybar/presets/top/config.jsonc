@@ -3,14 +3,10 @@
     //#####################
     //### CONFIGURATION ###
     //#####################
-    // "reload_style_on_change": true,
-    "margin-top": 7,
-    "margin-left": 8,
-    "margin-right": 8,
-    "margin-bottom": 0,
     "layer": "bottom",
     "position": "top",
     "spacing": 15,
+    "reload_style_on_change": true,
     //##################
     //### BAR ORDER  ###
     //##################
@@ -23,14 +19,15 @@
         // "memory",
     ],
     // "modules-center":[
-        // "hyprland/window"
-        // "custom/weather",
+    //     "hyprland/window"
+        // "custom/weather"
     // ],
     "modules-right": [
         "tray",
         // "custom/update",
         "pulseaudio",
-        // "backlight",
+        // "wireplumber",
+        // "pulseaudio#microphone",
         "battery",
         "network",
         "clock#date",
@@ -56,14 +53,14 @@
             "9": [],
             "10": []
         },
-        "format": "<small>{icon}</small>",
+        // "format": "<small>{icon}</small>",
         "format-icons": {
             // "active": "",
-            "default": "",
+            // "default": "",
         }
     },
     "hyprland/window": {
-        "max-length": 30,
+        "max-length": 40,
         "tooltip": false
     },
     "clock#time": {
@@ -147,7 +144,30 @@
 	    "tooltip": true,
 	    "on-click": "blueman-manager",
     },
-        "pulseaudio": {
+    "wireplumber": {
+        "format": "{icon}",
+        "format-bluetooth": " {icon} {volume}% {format_source}",
+        "format-bluetooth-muted": "  {icon} {format_source}",
+	    "format-muted": "<big> </big>",
+        "format-source": " {volume}%",
+        "format-source-muted": " ",
+        "format-icons": {
+            "headphone": " ",
+            "hands-free": "🎧 ",
+            "headset": " ",
+            "phone": "",
+            "portable": "",
+            "car": " ",
+            "default": [
+               "",
+                " ",
+                " "
+            ],
+        },
+        "tooltip-format": "Volume: {volume}%",
+        "on-click": "easyeffects"
+    },
+    "pulseaudio": {
 	    "format": "{format_source}{icon} ",
 	    "format-bluetooth": "{icon} 󰂰 {volume}%",
 	    "format-muted": " ",
@@ -172,28 +192,13 @@
 	    "smooth-scrolling-threshold": 1,
 	    "tooltip-format": "{desc} | {volume}%",
     },
-    "wireplumber": {
-        "format": "{icon}",
-        "format-bluetooth": " {icon} {volume}% {format_source}",
-        "format-bluetooth-muted": "  {icon} {format_source}",
-        "format-muted": "  {format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " ",
-        "format-icons": {
-            "headphone": " ",
-            "hands-free": " ",
-            "headset": " ",
-            "phone": "",
-            "portable": "",
-            "car": " ",
-            "default": [
-               "",
-                " ",
-                " "
-            ],
-        },
-        "tooltip-format": "Volume: {volume}%",
-        "on-click": "easyeffects"
+    "pulseaudio#microphone": {
+	    "format": "{format_source} ",
+    	"format-source": "",
+	    "format-source-muted": "",
+        "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SOURCE@ 2%+",
+        "on-scroll-down": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SOURCE@ 2%-",
+	    "tooltip-format": "{source_desc} | {source_volume}%",
     },
     "cpu": {
         "interval": 2,
@@ -209,7 +214,7 @@
         "on-click-right": "kitty --title btop sh -c 'btop'"
     },
     "custom/storage": {
-        "interval": 300,
+        "interval": 30,
         "format": " {}",
         "format-alt": "{percentage}%  ",
         "return-type": "json",
@@ -220,7 +225,8 @@
         "exec": "~/.local/bin/media-info",
         "on-click": "~/.local/bin/player next_track",
         "on-click-right": "~/.local/bin/player previous_track",
-        "escape": true
+        "escape": true,
+        "tooltip": false
     },
     "backlight": {
         "format": "󰃟 ",
@@ -248,13 +254,21 @@
         "exec-if": "ping wttr.in -c1"
     },
     "idle_inhibitor": {
-        "format": "", //{icon}
+        "format": "", // {icon}
         "format-icons": {
             "activated": "",
             "deactivated": ""
         },
+        "on-click-right": "rofi -show powermenu -modi powermenu:~/.local/bin/rofi-powermenu -config ~/.config/rofi/presets/powermenu.rasi",
         "timeout": 60.0,
         "tooltip": false
+    },
+    "custom/clipboard":{
+        "format": " ",
+        "on-click": "cliphist list | rofi -dmenu -display-columns 2 -config ~/.config/rofi/presets/clipboard.rasi | cliphist decode | wl-copy",
+        "on-click-right": "pkill rofi",
+        "tooltip-format": "Clipboard"
+
     },
     "custom/notification": {
         "format": "",
@@ -268,8 +282,11 @@
         "on-click": "~/.local/bin/update-status",
         "tooltip-format": "Check Updates"
     },
+    "custom/separator" : {
+        "format": " ",
+    },
     "tray": {
-        "icon-size": 19,
+        "icon-size": 20,
         "spacing": 12
-    }
+    },
 }
