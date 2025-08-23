@@ -9,30 +9,24 @@ shell /bin/zsh
 #bold_italic_font auto
 
 # Font size (in pts)
-font_size        18.0
+font_size        15.0
 modify_font underline_position		5
 modify_font strikethrough_position	5
 
 # Color Scheme {{
 
 # bindkey -s '^F' 'fbat\n'
-line_height 130%
 
 background_opacity 0.9
 background_blur 10
 
-window_padding_width 20
-
+window_padding_width 14
 scrollback_indicator_opacity 0
 
 # Cursor :{{
 # The cursor shape can be one of (block, beam, underline)
-cursor_shape block
-shell_integration no-cursor
+cursor_shape beam
 cursor_blink_interval -1 ease-in-out
-
-cursor_beam_thickness 1.5
-cursor_underline_thickness 2.0
 
 #cursor_trail 50
 #cursor_trail_decay 0.1 0.2
@@ -71,8 +65,6 @@ open_url_with default
 
 # Tab bar :{{
 
-
-# tab_bar_style hidden
 tab_bar_edge bottom
 tab_bar_style powerline
 tab_powerline_style round
@@ -176,29 +168,20 @@ map alt+6  goto_tab 6
 
 #: }}}
 
-# Enhanced tmux integration for Kitty
+# tmux
 map ctrl+delete send_text all \x0b[3;5~
-
-# Improved session management
-map ctrl+t launch --type=overlay --hold tmux new-session -A -s main
-map ctrl+shift+t launch --type=overlay tmux new-session -s "session-$(date +%s)"
-map ctrl+alt+t launch --type=overlay tmux list-sessions
-
-# Better tmux control
-map ctrl+w launch --type=overlay --hold sh -c "tmux kill-session -t main || tmux kill-server"
-map ctrl+shift+w launch --type=overlay sh -c "tmux kill-server"
-
-# Quick tmux attach (if detached)
-map ctrl+r launch --type=overlay tmux attach-session -t main
-
-# Tmux session switcher
-map ctrl+s launch --type=overlay bash -c 'sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null) && if [ -n "$sessions" ]; then selected=$(echo "$sessions" | fzf --height=40% --reverse --header="Select tmux session:" --no-preview) && [ -n "$selected" ] && tmux attach-session -t "$selected"; else echo "No tmux sessions found"; sleep 2; fi'
-
-# Window/pane management through Kitty
-map ctrl+shift+enter launch --location=hsplit --cwd=current
-map ctrl+enter launch --location=vsplit --cwd=current
+# map ctrl+t new_os_window tmux
+map ctrl+t launch --type=overlay tmux new-session -A -s default
+# map ctrl+t launch --type=overlay tmux
+map ctrl+w launch sh -c "tmux kill-server"
+# font_family      family="JetBrains Mono"
+# bold_font        auto
+# italic_font      auto
+# bold_italic_font auto
 
 
+
+include current-theme.conf
 
 
 # BEGIN_KITTY_FONTS
@@ -207,9 +190,3 @@ bold_font        auto
 italic_font      auto
 bold_italic_font auto
 # END_KITTY_FONTS
-
-
-# BEGIN_KITTY_THEME
-# Rosé Pine
-include current-theme.conf
-# END_KITTY_THEME
