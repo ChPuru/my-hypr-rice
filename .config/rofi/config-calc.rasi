@@ -1,6 +1,5 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
 /* Main Config Calculator */
-/* Submitted by: https://github.com/JosephArmas */
+
 
 @import "~/.config/rofi/config.rasi" 
 
