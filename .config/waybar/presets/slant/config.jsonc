@@ -5,36 +5,36 @@
     //#####################
     // "reload_style_on_change": true,
     "margin-top": 7,
-    "margin-left": 8,
-    "margin-right": 8,
+    "margin-left": 15,
+    "margin-right": 15,
     "margin-bottom": 0,
-    "layer": "bottom",
+    "layer": "top",
     "position": "top",
-    "spacing": 15,
+    "spacing": 10,
     //##################
     //### BAR ORDER  ###
     //##################
     "modules-left": [
         "idle_inhibitor",
-        "hyprland/workspaces",
-        "custom/song"
+        "hyprland/workspaces"
         // "custom/storage",
         // "cpu",
         // "memory",
     ],
-    // "modules-center":[
-        // "hyprland/window"
+    "modules-center":[
+        // "hyprland/window",
         // "custom/weather",
-    // ],
+        "custom/song",
+    ],
     "modules-right": [
         "tray",
         // "custom/update",
-        "pulseaudio",
-        // "backlight",
-        "battery",
         "network",
+        // "backlight",
+        "pulseaudio",
+        "battery",
         "clock#date",
-        "clock#time",
+        "clock#time"
     ],
     //################
     //### MODULES  ###
@@ -49,21 +49,31 @@
             "2": [],
             "3": [],
             "4": [],
-            // "5": [],
+            "5": [],
             // "6": [],
             // "7": [],
             // "8": [],
-            "9": [],
+            // "9": [],
             "10": []
         },
         "format": "<small>{icon}</small>",
         "format-icons": {
-            // "active": "",
-            "default": "",
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "9": "",
+            "10": "",
+            // "active": "<small></small>",
+            "default": "",
         }
     },
     "hyprland/window": {
-        "max-length": 30,
+        "max-length": 40,
         "tooltip": false
     },
     "clock#time": {
@@ -71,7 +81,7 @@
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "clock#date": {
-        "format": "{:%a <big>%d</big> %b}",
+        "format": "{:%a %d %b}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "battery": {
@@ -147,8 +157,8 @@
 	    "tooltip": true,
 	    "on-click": "blueman-manager",
     },
-        "pulseaudio": {
-	    "format": "{format_source}{icon} ",
+    "pulseaudio": {
+	    "format": "{format_source}{icon}",
 	    "format-bluetooth": "{icon} 󰂰 {volume}%",
 	    "format-muted": " ",
     	"format-source": "<big></big>  ",
@@ -172,28 +182,13 @@
 	    "smooth-scrolling-threshold": 1,
 	    "tooltip-format": "{desc} | {volume}%",
     },
-    "wireplumber": {
-        "format": "{icon}",
-        "format-bluetooth": " {icon} {volume}% {format_source}",
-        "format-bluetooth-muted": "  {icon} {format_source}",
-        "format-muted": "  {format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " ",
-        "format-icons": {
-            "headphone": " ",
-            "hands-free": " ",
-            "headset": " ",
-            "phone": "",
-            "portable": "",
-            "car": " ",
-            "default": [
-               "",
-                " ",
-                " "
-            ],
-        },
-        "tooltip-format": "Volume: {volume}%",
-        "on-click": "easyeffects"
+    "pulseaudio#microphone": {
+	    "format": "{format_source} ",
+    	"format-source": "",
+	    "format-source-muted": "",
+        "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SOURCE@ 2%+",
+        "on-scroll-down": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SOURCE@ 2%-",
+	    "tooltip-format": "{source_desc} | {source_volume}%",
     },
     "cpu": {
         "interval": 2,
@@ -248,7 +243,7 @@
         "exec-if": "ping wttr.in -c1"
     },
     "idle_inhibitor": {
-        "format": "", //{icon}
+        "format": "<big> </big>", //{icon}
         "format-icons": {
             "activated": "",
             "deactivated": ""
@@ -270,6 +265,10 @@
     },
     "tray": {
         "icon-size": 19,
-        "spacing": 12
+        "spacing": 5
+    },
+    "custom/seperator":{
+        "format": "|",
+        "tooltip": false
     }
 }
