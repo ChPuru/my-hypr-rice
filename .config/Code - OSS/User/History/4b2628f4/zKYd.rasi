@@ -1,0 +1,259 @@
+/* ~/.config/rofi/launcher.rasi */
+configuration {
+    modi: "drun,run,window,ssh";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    display-drun: "Applications";
+    display-run: "Commands";
+    display-window: "Windows";
+    display-ssh: "SSH";
+    drun-display-format: "{name}";
+    window-format: "{w} {c} {t}";
+    font: "JetBrains Mono Nerd Font 14";
+    case-sensitive: false;
+    cycle: true;
+    sidebar-mode: false;
+    hover-select: true;
+    eh: 1;
+    auto-select: false;
+    parse-hosts: true;
+    parse-known-hosts: true;
+    combi-modi: "window,drun,ssh";
+    matching: "fuzzy";
+    tokenize: true;
+    m: "-4";
+    line-margin: 2;
+    line-padding: 1;
+    separator-style: "dash";
+    hide-scrollbar: true;
+    fullscreen: false;
+    fake-transparency: false;
+    dpi: -1;
+    threads: 0;
+    scroll-method: 0;
+    window-format: "{w}    {c}   {t}";
+    click-to-exit: true;
+    show-match: true;
+    max-history-size: 25;
+    combi-hide-mode-prefix: false;
+    display-window: "";
+    display-windowcd: "";
+    display-run: "";
+    display-ssh: "";
+    display-drun: "";
+    display-combi: "";
+    display-keys: "";
+    kb-primary-paste: "Control+V,Shift+Insert";
+    kb-secondary-paste: "Control+v,Insert";
+}
+
+* {
+    bg0: #1e1e2e;
+    bg1: #313244;
+    bg2: #45475a;
+    bg3: #585b70;
+    fg0: #cdd6f4;
+    fg1: #bac2de;
+    fg2: #a6adc8;
+    red: #f38ba8;
+    green: #a6e3a1;
+    yellow: #f9e2af;
+    blue: #89b4fa;
+    magenta: #cba6f7;
+    cyan: #94e2d5;
+    
+    accent: @magenta;
+    urgent: @red;
+    
+    background-color: transparent;
+    text-color: @fg0;
+    
+    margin: 0px;
+    padding: 0px;
+    spacing: 0px;
+}
+
+window {
+    location: center;
+    width: 50%;
+    height: 60%;
+    background-color: @bg0;
+    border: 2px solid;
+    border-color: @accent;
+    border-radius: 16px;
+    
+    /* Blur and shadow effects */
+    transparency: "real";
+}
+
+mainbox {
+    padding: 12px;
+    background-color: transparent;
+}
+
+inputbar {
+    children: [prompt, entry];
+    background-color: @bg1;
+    border-radius: 12px;
+    padding: 12px;
+    margin: 0px 0px 12px 0px;
+}
+
+prompt {
+    background-color: @accent;
+    color: @bg0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 0px 8px 0px 0px;
+    font-weight: bold;
+}
+
+entry {
+    background-color: transparent;
+    placeholder: "Search applications...";
+    placeholder-color: @fg2;
+    cursor-color: @accent;
+    cursor-width: 2px;
+}
+
+listview {
+    background-color: transparent;
+    columns: 3;
+    lines: 8;
+    cycle: true;
+    dynamic: true;
+    scrollbar: true;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    spacing: 8px;
+    margin: 0px;
+    padding: 0px;
+}
+
+element {
+    background-color: transparent;
+    text-color: @fg0;
+    padding: 12px;
+    border-radius: 12px;
+    orientation: horizontal;
+    children: [element-icon, element-text];
+    spacing: 12px;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg0;
+}
+
+element normal.urgent {
+    background-color: @urgent;
+    text-color: @bg0;
+}
+
+element normal.active {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element selected.normal {
+    background-color: @bg1;
+    text-color: @accent;
+}
+
+element selected.urgent {
+    background-color: @urgent;
+    text-color: @bg0;
+}
+
+element selected.active {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @fg0;
+}
+
+element alternate.urgent {
+    background-color: @urgent;
+    text-color: @bg0;
+}
+
+element alternate.active {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 32px;
+    cursor: pointer;
+}
+
+element-text {
+    background-color: transparent;
+    cursor: pointer;
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
+}
+
+/* Scrollbar */
+scrollbar {
+    width: 4px;
+    border: 0px;
+    handle-color: @accent;
+    handle-width: 8px;
+    padding: 0;
+    margin: 0 0 0 8px;
+    background-color: @bg2;
+    border-radius: 8px;
+}
+
+/* Message */
+message {
+    padding: 12px;
+    border-radius: 12px;
+    background-color: @bg1;
+    margin: 0px 0px 12px 0px;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @fg0;
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
+}
+
+/* Error message */
+error-message {
+    padding: 12px;
+    border-radius: 12px;
+    background-color: @urgent;
+    border: 1px solid @red;
+    margin: 0px 0px 12px 0px;
+}
+
+/* Mode switcher */
+mode-switcher {
+    spacing: 0px;
+    background-color: @bg1;
+    border-radius: 12px;
+    padding: 4px;
+    margin: 12px 0px 0px 0px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: transparent;
+    text-color: @fg1;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button selected {
+    background-color: @accent;
+    text-color: @bg0;
+}

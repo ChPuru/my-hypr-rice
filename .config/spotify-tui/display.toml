@@ -1,0 +1,15 @@
+[display]
+show_album_art = true
+album_art_width = 300
+album_art_height = 300
+album_art_position = "center"
+
+show_progress_bar = true
+progress_bar_length = 50
+
+show_elapsed_time = true
+show_total_time = true
+
+show_play_pause = true
+show_next_prev = true
+show_volume = true

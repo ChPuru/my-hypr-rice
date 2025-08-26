@@ -1,0 +1,117 @@
+/**
+ * Rofi Configuration - Fixed Version
+ */
+
+configuration {
+  modi: "drun,run,window";
+  show-icons: true;
+  icon-theme: "Papirus-Dark";
+  display-drun: "Apps";
+  display-run: "Run";
+  display-window: "Windows";
+  drun-display-format: "{name}";
+  window-format: "{w} {c} {t}";
+}
+
+* {
+  bg-col:  #1e1e2e;
+  bg-col-light: #1e1e2e;
+  border-col: #cba6f7;
+  selected-col: #1e1e2e;
+  blue: #89b4fa;
+  fg-col: #cdd6f4;
+  fg-col2: #f5c2e7;
+  grey: #6c7086;
+  width: 55%;
+}
+
+window {
+  transparency: "real";
+  background-color: @bg-col;
+  color: @fg-col;
+  border: 2px;
+  border-color: @border-col;
+  border-radius: 10px;
+  width: @width;
+  location: center;
+  x-offset: 0;
+  y-offset: 0;
+}
+
+mainbox {
+  children: [inputbar, listview, message];
+}
+
+inputbar {
+  children: [prompt, entry];
+  background-color: @bg-col;
+  color: @fg-col;
+  padding: 15px;
+}
+
+prompt {
+  background-color: @blue;
+  color: @bg-col;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+entry {
+  background-color: @bg-col;
+  color: @fg-col;
+  placeholder: "Search...";
+  placeholder-color: @grey;
+}
+
+listview {
+  background-color: @bg-col;
+  columns: 1;
+  lines: 8;
+  cycle: true;
+  dynamic: true;
+  scrollbar: true;
+}
+
+element {
+  background-color: @bg-col;
+  color: @fg-col;
+  padding: 8px;
+}
+
+element selected {
+  background-color: @selected-col;
+  color: @fg-col2;
+  border: 1px solid @border-col;
+  border-radius: 5px;
+}
+
+element-text {
+  background-color: inherit;
+  color: inherit;
+}
+
+element-icon {
+  size: 25px;
+  background-color: inherit;
+}
+
+message {
+  background-color: @bg-col;
+  color: @fg-col;
+  padding: 5px;
+  border: 0;
+}
+
+textbox {
+  background-color: @bg-col;
+  color: @fg-col;
+}
+
+error-message {
+  background-color: @bg-col;
+  color: #f38ba8;
+  padding: 5px;
+  border: 2px;
+  border-color: #f38ba8;
+  border-radius: 5px;
+}

@@ -62,3 +62,6 @@ quickshell.target = '~/.config/quickshell/qml_color.json'
 
 #zathura.template = 'colors-zathura'
 #zathura.target = '~/.config/zathura/zathurarc'
+
+[wallpapers]
+directory = "/home/user/Pictures/"

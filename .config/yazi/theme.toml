@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 cwd = { fg = "#89b4fa", bold = true }
 border_fg = "#45475a"
 hovered_fg = "#cba6f7"

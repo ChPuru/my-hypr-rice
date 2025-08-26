@@ -1,0 +1,6 @@
+---
+client_id: dceb207fc3244db5b3540c1e8e9e501b
+client_secret: 12f04da997ab4a058cc58215ef67f8dd
+device_id: ~
+port: 8888
+redirect_uri: http://127.0.0.1:8888/callback

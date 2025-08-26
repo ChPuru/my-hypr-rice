@@ -2,3 +2,14 @@
 background = "#000000"
 text = "#ffffff"
 accent = "#00ff00"
+
+[general]
+auto_play = true
+show_volume = true
+show_time = true
+show_progress = true
+show_lyrics = false
+show_album_art = true
+album_art_size = 300
+audio_cache = false
+backend = "pulseaudio'

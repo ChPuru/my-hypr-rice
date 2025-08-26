@@ -1,0 +1,119 @@
+@theme "~/.cache/wal/colors-rofi-dark.rasi"
+
+
+configuration {
+    modi:                        "drun";
+    font:                        "JetBrainsMono Nerd Font 13";
+    show-icons:                  true;
+    drun-display-format:         "{name}";
+    hover-select:                true;
+    me-select-entry:             "MouseSecondary";
+    me-accept-entry:             "MousePrimary";
+    window-format:               "{w} · {c} · {t}";
+    dpi:                         120;
+}
+
+* {
+    background-alt:              @selected-active-background;
+    selected:                    @selected-normal-background;
+    active:                      @selected-urgent-background;
+    urgent:                      @selected-normal-background;
+    text-selected:               @foreground;
+    text-color:                  @foreground;
+    border-color:                @selected;
+}
+
+window {
+    enabled:                     true;
+    fullscreen:                  false;
+    transparency:                "real";
+    cursor:                      "default";
+    spacing:                     0px;
+    border-radius:               16px;
+    location:                    center;
+    anchor:                      center;
+    width:                       85%;
+    background-color:            #1e1e2ecc;
+    border:                      2px;
+    border-color:                #89b4fa33;
+    padding:                     10px;
+}
+
+mainbox {
+    enabled:                     true;
+    children:                    [ "inputbar", "listview" ];
+    background-color:            transparent;
+    spacing:                     20px;
+}
+
+inputbar {
+    enabled:                     true;
+    text-color:                  @text-color;
+    background-color:            #313244cc;
+    padding:                     8px 16px;
+    margin:                      10px 80px 0px 80px;
+    border-radius:               12px;
+    border:                      2px;
+    border-color:                #89b4fa44;
+    children:                    [ "entry" ];
+}
+
+entry {
+    enabled:                     true;
+    placeholder:                 " type to search...";
+    padding:                     4px;
+    text-color:                  @foreground;
+    background-color:            transparent;
+    font:                        "JetBrainsMono Nerd Font 12";
+}
+
+listview {
+    enabled:                     true;
+    columns:                     3;
+    lines:                       2;
+    spacing:                     2px;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    fixed-height:                true;
+    fixed-columns:               true;
+    background-color:            transparent;
+}
+
+element {
+    orientation: vertical;
+    expand: true;
+    spacing: 4px;
+    padding: 10px;
+    border-radius: 16px;
+    background-color: #313244aa;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color:            #31324488;
+    text-color:                  @foreground;
+}
+element normal.urgent,
+element alternate.urgent,
+element normal.active,
+element alternate.active {
+    background-color:            #f38ba833;
+    text-color:                  @foreground;
+}
+element selected.normal {
+    background-color:            #89b4fa55;
+    border-color:                #89b4fa;
+    text-color:                  @text-selected;
+}
+element-icon {
+    size: 300px;
+    expand: true;
+    padding: 0px;
+    background-color: transparent;
+}
+
+element-text {
+    enabled: false;
+}

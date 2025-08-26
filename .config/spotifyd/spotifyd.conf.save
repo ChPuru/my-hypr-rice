@@ -1,0 +1,14 @@
+[global]
+username = "nm7g5tc7yamcg1zsf4si1nch8"
+
+backend = "pulseaudio"
+volume_control = "softvol"
+device_name = "Hyprland Spotify"
+bitrate = 320
+cache_path = "/tmp/spotifyd_cache"
+audio_format = "S16"
+volume_normalisation = true
+normalisation_pregain = -10
+
+[oauth]
+use_oauth2 = true
